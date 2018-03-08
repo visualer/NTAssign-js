@@ -89,7 +89,9 @@ function calculate(form) {
                 .toFixed(3).toString();
             keyArr.push(i);
             valArr.push(val);
-        } catch (err) { }
+        } catch (err) {
+            // pass
+        }
     }
     for (let i = 0; i < keyArr.length; i++) {
         let i1 = (i % 2 === 0 ? i : i - 1);
