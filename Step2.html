@@ -1,0 +1,627 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-compatible" content="IE=edge, chrome=1">
+    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <title>Step2</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <!--<link href="css/bootstrap-theme.min.css" rel="stylesheet"/>-->
+    <link href="css/bootstrap-select.min.css" rel="stylesheet"/>
+    <link href="css/site.css" rel="stylesheet"/>
+
+    <script src="js/lib/jquery-3.3.1.min.js"></script>
+    <script src="js/lib/jquery.validate.min.js"></script>
+    <script src="js/lib/jquery.validate.unobtrusive.min.js"></script>
+    <!-- no need to ajax now -->
+    <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/lib/bootstrap-select.min.js"></script>
+    <script src="js/lib/modernizr-2.8.3.js"></script>
+    <script src="js/lib/respond.min.js"></script>
+    <script src="js/lib/flot/jquery.flot.min.js"></script>
+
+</head>
+<body>
+<div class="container body-content">
+    <a href="http://old.chem.pku.edu.cn/liy/labhomepage" target="_blank">
+        <img src="img/banner_waifu2x.png" style="width: 75%;" class="center-block" />
+    </a>
+
+    <!-- start content -->
+    <h1 id="title" class="math">
+        Step 2
+    </h1>
+    <hr />
+    <div class="row">
+        <div class="form-horizontal math col-md-6">
+            <form action="Step3.html" method="get" name="formInput" onsubmit="return validate(this);">
+                <div class="row">
+                    <p id="hint" style="font-size: 16px; padding: 8px; border-radius: 4px;"
+                       class="col-lg-9 col-md-11 col-sm-8 col-xs-9
+                       col-lg-offset-1 col-md-offset-0_5 col-sm-offset-1 col-xs-offset-1">
+                        Please input at least 2 values.<br />
+                        Only paired transition energies are allowed to input in the current version.
+                    </p>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="slType" class="control-label col-md-4 col-sm-3 col-xs-12 col-xs-offset-0_5">
+                        SWNT Type
+                    </label>
+                    <div class="col-md-6 col-sm-4 col-xs-8 col-xs-offset-0_5">
+                        <select id="slType" name="Type" class="form-control selectpicker math" disabled="disabled">
+                            <option value="0">Air-suspended SWNTs</option>
+                            <option value="1">SWNTs on \(\mathrm{SiO_2}/\mathrm{Si}\) substrates</option>
+                            <option value="2">SWNT arrays on quartz substrates</option>
+                            <option value="3">&quot;Super-growth&quot; SWNTs</option>
+                            <option value="4">SDS-dispersed SWNTs</option>
+                            <option value="5">ssDNA-dispersed SWNTs</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="slP1" class="control-label col-md-4 col-sm-3 col-xs-12 col-xs-offset-0_5">
+                        Transition Energy 1
+                    </label>
+                    <div class="col-lg-2 col-md-2_5 col-sm-2 col-xs-3 col-xs-offset-0_5">
+                        <select id="slP1" name="P1" class="form-control selectpicker math" title="\(E_{ii}\)">
+                            <option value="0">\(S_{11}\)</option>
+                            <option value="1">\(S_{22}\)</option>
+                            <option value="2">\(M_{11}^-\)</option>
+                            <option value="3">\(M_{11}^+\)</option>
+                            <option value="4">\(S_{33}\)</option>
+                            <option value="5">\(S_{44}\)</option>
+                            <option value="6">\(M_{22}^-\)</option>
+                            <option value="7">\(M_{22}^+\)</option>
+                            <option value="8">\(S_{55}\)</option>
+                            <option value="9">\(S_{66}\)</option>
+                            <option value="10">\(M_{33}^-\)</option>
+                            <option value="11">\(M_{33}^+\)</option>
+                        </select>
+                    </div>
+                    <label for="edVal1" class="control-label col-auto">=</label>
+                    <div class="col-md-4 col-sm-4 col-xs-5">
+                        <input id="edVal1" name="Val1" class="form-control text-box single-line"
+                               pattern="[\d]+\.?[\d]*" type="text" />
+                    </div>
+                    <label class="control-label col-auto">\(\mathrm{eV}\)</label>
+                </div>
+                <div class="form-group">
+                    <label for="slP2" class="control-label col-md-4 col-sm-3 col-xs-12 col-xs-offset-0_5">
+                        Transition Energy 2</label>
+                    <div class="col-lg-2 col-md-2_5 col-sm-2 col-xs-3 col-xs-offset-0_5">
+                        <select id="slP2" name="P2" class="form-control selectpicker" disabled="disabled"
+                                title="\(E_{ii}\)">
+                            <option value="0">\(S_{11}\)</option>
+                            <option value="1">\(S_{22}\)</option>
+                            <option value="2">\(M_{11}^-\)</option>
+                            <option value="3">\(M_{11}^+\)</option>
+                            <option value="4">\(S_{33}\)</option>
+                            <option value="5">\(S_{44}\)</option>
+                            <option value="6">\(M_{22}^-\)</option>
+                            <option value="7">\(M_{22}^+\)</option>
+                            <option value="8">\(S_{55}\)</option>
+                            <option value="9">\(S_{66}\)</option>
+                            <option value="10">\(M_{33}^-\)</option>
+                            <option value="11">\(M_{33}^+\)</option>
+                        </select>
+                    </div>
+                    <label for="edVal2" class="control-label col-auto">=</label>
+                    <div class="col-md-4 col-sm-4 col-xs-5">
+                        <input id="edVal2" name="Val2" class="form-control text-box single-line"
+                               pattern="[\d]+\.?[\d]*" type="text" />
+                    </div>
+                    <label class="control-label col-auto">\(\mathrm{eV}\)</label>
+                </div>
+                <div class="form-group">
+                    <label for="slRBM" class="control-label col-md-4 col-sm-3 col-xs-12 col-xs-offset-0_5">RBM</label>
+                    <div class="col-lg-2 col-md-2_5 col-sm-2 col-xs-3 col-xs-offset-0_5">
+                        <button id="slRBM" type="button" class="btn btn-default btn-block" style="text-align: left"
+                                disabled="disabled">
+                            \(\omega_{\mathrm{RBM}}\)
+                        </button>
+                    </div>
+                    <label for="edRBM" class="control-label col-auto">=</label>
+                    <div class="col-md-4 col-sm-4 col-xs-5">
+                        <input id="edRBM" name="RBM" class="form-control text-box single-line" pattern="[\d]+\.?[\d]*"
+                               type="text" value="" />
+                    </div>
+                    <label class="control-label col-auto">\(\mathrm{cm}^{-1}\)</label>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-sm-offset-3 col-md-10 col-xs-offset-0_5">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                    </div>
+                </div>
+            </form>
+
+            <form onsubmit="return false;">
+                <div class="row">
+                    <h1 id="calcTitle" style="padding: 8px; border-radius: 4px;"
+                        class="col-lg-9 col-md-11 col-sm-8 col-xs-9 col-lg-offset-1 col-md-offset-0_5
+                        col-sm-offset-1 col-xs-offset-1">
+                        <small>(n,m) Calculator</small>
+                    </h1>
+                </div>
+                <div class="form-group">
+                    <label for="NCalc" class="control-label col-auto" style="margin-left: 10%">(n,m) = (</label>
+                    <div class="col-xs-2">
+                        <input id="NCalc" name="NCalc" class="form-control text-box single-line" pattern="\d+"
+                               type="text" />
+                    </div>
+                    <label for="MCalc" class="control-label col-auto">,</label>
+                    <div class="col-xs-2">
+                        <input id="MCalc" name="MCalc" class="form-control text-box single-line" pattern="\d+"
+                               type="text" />
+                    </div>
+                    <label class="control-label col-auto">)</label>
+                    <input type="submit" value="Calculate" class="btn btn-primary" style="margin-left: 6%;" />
+                </div>
+            </form>
+            <div class="col-md-10 col-sm-8 col-xs-8">
+                <!--@Html.Partial("Calc")-->
+            </div>
+        </div>
+
+        <div id="dataTables" class="col-md-6 col-xs-12 col-sm-12">
+            <table class="table table-striped math" style="display: none;">
+                <tr>
+                    <td colspan=5>$$\begin{align*}E_{ii}(p)=\frac{\alpha(p)}{d_t}-\frac{\beta(p)}{d_t^2}+\frac{\gamma(p)}{d_t^2}\cos(3\theta)\quad[1]\end{align*}$$</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(p\)</td>
+                    <td colspan=1>\(E_{ii}\)</td>
+                    <td colspan=1>\(\alpha(p)/(\mathrm{eV\ nm})\)</td>
+                    <td colspan=1>\(\beta(p)/(\mathrm{eV\ nm^2})\)</td>
+                    <td colspan=1>\(\gamma(p)/(\mathrm{eV\ nm^2})^a\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(1\)</td>
+                    <td colspan=1>\(S_{11}\)</td>
+                    <td colspan=1>\(1.079\)</td>
+                    <td colspan=1>\(0.077\)</td>
+                    <td colspan=1>\(\pm0.063\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(2\)</td>
+                    <td colspan=1>\(S_{22}\)</td>
+                    <td colspan=1>\(2.022\)</td>
+                    <td colspan=1>\(0.308\)</td>
+                    <td colspan=1>\(\pm0.172\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(3\)</td>
+                    <td colspan=1>\(M_{11}^\pm\)</td>
+                    <td colspan=1>\(3.170\)</td>
+                    <td colspan=1>\(0.764\)</td>
+                    <td colspan=1>\(\pm0.286\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(4\)</td>
+                    <td colspan=1>\(S_{33}\)</td>
+                    <td colspan=1>\(4.286\)</td>
+                    <td colspan=1>\(1.230\)</td>
+                    <td colspan=1>\(\pm0.412\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(5\)</td>
+                    <td colspan=1>\(S_{44}\)</td>
+                    <td colspan=1>\(5.380\)</td>
+                    <td colspan=1>\(1.922\)</td>
+                    <td colspan=1>\(\pm0.644\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(6\)</td>
+                    <td colspan=1>\(M_{22}^\pm\)</td>
+                    <td colspan=1>\(6.508\)</td>
+                    <td colspan=1>\(2.768\)</td>
+                    <td colspan=1>\(\pm0.928\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(7\)</td>
+                    <td colspan=1>\(S_{55}\)</td>
+                    <td colspan=1>\(7.624\)</td>
+                    <td colspan=1>\(3.768\)</td>
+                    <td colspan=1>\(\pm1.024\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(8\)</td>
+                    <td colspan=1>\(S_{66}\)</td>
+                    <td colspan=1>\(8.734\)</td>
+                    <td colspan=1>\(4.921\)</td>
+                    <td colspan=1>\(\pm1.479\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(9\)</td>
+                    <td colspan=1>\(M_{33}^\pm\)</td>
+                    <td colspan=1>\(9.857\)</td>
+                    <td colspan=1>\(6.228\)</td>
+                    <td colspan=1>\(\pm1.692\)</td>
+                </tr>
+                <tr>
+                    <td colspan=5>\(^a\)For M-SWNTs, \(\gamma(p)\) is negative for \(M_{ii}^-\) and positive for \(M_{ii}^+\).<br />For MOD1 S-SWNTs, \(\gamma(p)\) is negative when \(i\) is even and positive when \(i\) is odd.<br />For MOD2 S-SWNTs, \(\gamma(p)\) is negative when \(i\) is odd and positive when \(i\) is even.\(\quad[1][2]\)</td>
+                </tr>
+                <tr>
+                    <td colspan=5>$$\begin{align*}\omega_\mathrm{RBM}=\frac{A}{d_t}+B\end{align*}$$$$\begin{align*}& p=1,2:A=204\ \mathrm{nm\ cm^{-1}},B=27\ \mathrm{cm^{-1}}\quad[3]\\& p=3:A=200\ \mathrm{nm\ cm^{-1}},B=26\ \mathrm{cm^{-1}}\quad[1]\\& \mathrm{others}:A=228\ \mathrm{nm\ cm^{-1}},B=0\ \mathrm{cm^{-1}}\quad[2]\end{align*}$$</td>
+                </tr>
+                <tr style="text-align: left;">
+                    <td colspan=5>
+                        <a target='_blank' href='http://doi.org/10.1021/acsnano.6b04453'>
+                            [1] Zhang, D. Q. <i>et al.</i> (n,m) Assignments of Metallic Single-Walled Carbon Nanotubes by Raman Spectroscopy: The Importance of Electronic Raman Scattering. <i>ACS Nano</i> <b>10</b>, 10789-10797 (2016).<br />
+                        </a>
+                        <a target='_blank' href='http://doi.org/10.1038/nnano.2012.52'>[2] Liu, K. H. <i>et al.</i> An atlas of carbon nanotube optical transitions. <i>Nat. Nanotech.</i> <b>7</b>, 325-329 (2012).<br />
+                        </a>
+                        <a target='_blank' href='http://doi.org/10.1103/PhysRevLett.95.217401'>[3] Meyer, J. C. <i>et al.</i> Raman modes of index-identified freestanding single-walled carbon nanotubes. <i>Phys. Rev. Lett.</i> <b>95</b>, 217401 (2005).
+                        </a>
+                    </td>
+                </tr>
+            </table>
+            <table class="table table-striped math" style="display: none;">
+                <tr>
+                    <td colspan=5>$$\begin{align*}E_{ii}(p)=\frac{\alpha(p)}{d_t}-\frac{\beta(p)}{d_t^2}+\frac{\gamma(p)}{d_t^2}\cos(3\theta)-\Delta\end{align*}$$\(\Delta=40\ \mathrm{meV}\quad[1][2]\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(p\)</td>
+                    <td colspan=1>\(E_{ii}\)</td>
+                    <td colspan=1>\(\alpha(p)/(\mathrm{eV\ nm})\)</td>
+                    <td colspan=1>\(\beta(p)/(\mathrm{eV\ nm^2})\)</td>
+                    <td colspan=1>\(\gamma(p)/(\mathrm{eV\ nm^2})^a\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(1\)</td>
+                    <td colspan=1>\(S_{11}\)</td>
+                    <td colspan=1>\(1.079\)</td>
+                    <td colspan=1>\(0.077\)</td>
+                    <td colspan=1>\(\pm0.063\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(2\)</td>
+                    <td colspan=1>\(S_{22}\)</td>
+                    <td colspan=1>\(2.022\)</td>
+                    <td colspan=1>\(0.308\)</td>
+                    <td colspan=1>\(\pm0.172\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(3\)</td>
+                    <td colspan=1>\(M_{11}^\pm\)</td>
+                    <td colspan=1>\(3.170\)</td>
+                    <td colspan=1>\(0.764\)</td>
+                    <td colspan=1>\(\pm0.286\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(4\)</td>
+                    <td colspan=1>\(S_{33}\)</td>
+                    <td colspan=1>\(4.286\)</td>
+                    <td colspan=1>\(1.230\)</td>
+                    <td colspan=1>\(\pm0.412\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(5\)</td>
+                    <td colspan=1>\(S_{44}\)</td>
+                    <td colspan=1>\(5.380\)</td>
+                    <td colspan=1>\(1.922\)</td>
+                    <td colspan=1>\(\pm0.644\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(6\)</td>
+                    <td colspan=1>\(M_{22}^\pm\)</td>
+                    <td colspan=1>\(6.508\)</td>
+                    <td colspan=1>\(2.768\)</td>
+                    <td colspan=1>\(\pm0.928\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(7\)</td>
+                    <td colspan=1>\(S_{55}\)</td>
+                    <td colspan=1>\(7.624\)</td>
+                    <td colspan=1>\(3.768\)</td>
+                    <td colspan=1>\(\pm1.024\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(8\)</td>
+                    <td colspan=1>\(S_{66}\)</td>
+                    <td colspan=1>\(8.734\)</td>
+                    <td colspan=1>\(4.921\)</td>
+                    <td colspan=1>\(\pm1.479\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(9\)</td>
+                    <td colspan=1>\(M_{33}^\pm\)</td>
+                    <td colspan=1>\(9.857\)</td>
+                    <td colspan=1>\(6.228\)</td>
+                    <td colspan=1>\(\pm1.692\)</td>
+                </tr>
+                <tr>
+                    <td colspan=5>\(^a\)For M-SWNTs, \(\gamma(p)\) is negative for \(M_{ii}^-\) and positive for \(M_{ii}^+\).<br />For MOD1 S-SWNTs, \(\gamma(p)\) is negative when \(i\) is even and positive when \(i\) is odd.<br />For MOD2 S-SWNTs, \(\gamma(p)\) is negative when \(i\) is odd and positive when \(i\) is even.\(\quad[2][3]\)</td>
+                </tr>
+                <tr>
+                    <td colspan=5>$$\begin{align*}\omega_\mathrm{RBM}=\frac{A}{d_t}+B\end{align*}$$\(A=235.9\ \mathrm{nm\ cm^{-1}},B=5.5\ \mathrm{cm^{-1}}\quad[4]\)</td>
+                </tr>
+                <tr style="text-align: left;"><td colspan=5><a target='_blank' href='http://doi.org/10.1021/acsnano.6b04453'>[1] Zhang, D. Q. <i>et al.</i> (n,m) Assignments of Metallic Single-Walled Carbon Nanotubes by Raman Spectroscopy: The Importance of Electronic Raman Scattering. <i>ACS Nano</i> <b>10</b>, 10789-10797 (2016).<br /></a><a target='_blank' href='http://doi.org/10.1038/nnano.2013.227'>[2] Liu, K. H. <i>et al.</i> High-throughput optical imaging and spectroscopy of individual carbon nanotubes in devices. <i>Nat. Nanotech.</i> <b>8</b>, 917-922 (2013).<br /></a><a target='_blank' href='http://doi.org/10.1038/nnano.2012.52'>[3] Liu, K. H. <i>et al.</i> An atlas of carbon nanotube optical transitions. <i>Nat. Nanotech.</i> <b>7</b>, 325-329 (2012).<br /></a><a target='_blank' href='http://doi.org/10.1039/C5NR01076D'>[4] Zhang, D. Q. <i>et al.</i> (n,m) Assignments and quantification for single-walled carbon nanotubes on SiO2/Si substrates by resonant Raman spectroscopy. <i>Nanoscale</i> <b>7</b>, 10719-10727 (2015).</a></td></tr>
+            </table>
+            <table class="table table-striped math" style="display: none;">
+                <tr>
+                    <td colspan=5>$$\begin{align*}E_{ii}(p)=\frac{\alpha(p)}{d_t}-\frac{\beta(p)}{d_t^2}+\frac{\gamma(p)}{d_t^2}\cos(3\theta)-\Delta\end{align*}$$\(\Delta=100\ \mathrm{meV}\quad[1][2]\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(p\)</td>
+                    <td colspan=1>\(E_{ii}\)</td>
+                    <td colspan=1>\(\alpha(p)/(\mathrm{eV\ nm})\)</td>
+                    <td colspan=1>\(\beta(p)/(\mathrm{eV\ nm^2})\)</td>
+                    <td colspan=1>\(\gamma(p)/(\mathrm{eV\ nm^2})^a\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(1\)</td>
+                    <td colspan=1>\(S_{11}\)</td>
+                    <td colspan=1>\(1.079\)</td>
+                    <td colspan=1>\(0.077\)</td>
+                    <td colspan=1>\(\pm0.063\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(2\)</td>
+                    <td colspan=1>\(S_{22}\)</td>
+                    <td colspan=1>\(2.022\)</td>
+                    <td colspan=1>\(0.308\)</td>
+                    <td colspan=1>\(\pm0.172\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(3\)</td>
+                    <td colspan=1>\(M_{11}^\pm\)</td>
+                    <td colspan=1>\(3.170\)</td>
+                    <td colspan=1>\(0.764\)</td>
+                    <td colspan=1>\(\pm0.286\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(4\)</td>
+                    <td colspan=1>\(S_{33}\)</td>
+                    <td colspan=1>\(4.286\)</td>
+                    <td colspan=1>\(1.230\)</td>
+                    <td colspan=1>\(\pm0.412\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(5\)</td>
+                    <td colspan=1>\(S_{44}\)</td>
+                    <td colspan=1>\(5.380\)</td>
+                    <td colspan=1>\(1.922\)</td>
+                    <td colspan=1>\(\pm0.644\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(6\)</td>
+                    <td colspan=1>\(M_{22}^\pm\)</td>
+                    <td colspan=1>\(6.508\)</td>
+                    <td colspan=1>\(2.768\)</td>
+                    <td colspan=1>\(\pm0.928\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(7\)</td>
+                    <td colspan=1>\(S_{55}\)</td>
+                    <td colspan=1>\(7.624\)</td>
+                    <td colspan=1>\(3.768\)</td>
+                    <td colspan=1>\(\pm1.024\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(8\)</td>
+                    <td colspan=1>\(S_{66}\)</td>
+                    <td colspan=1>\(8.734\)</td>
+                    <td colspan=1>\(4.921\)</td>
+                    <td colspan=1>\(\pm1.479\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(9\)</td>
+                    <td colspan=1>\(M_{33}^\pm\)</td>
+                    <td colspan=1>\(9.857\)</td>
+                    <td colspan=1>\(6.228\)</td>
+                    <td colspan=1>\(\pm1.692\)</td>
+                </tr>
+                <tr>
+                    <td colspan=5>\(^a\)For M-SWNTs, \(\gamma(p)\) is negative for \(M_{ii}^-\) and positive for \(M_{ii}^+\).<br />For MOD1 S-SWNTs, \(\gamma(p)\) is negative when \(i\) is even and positive when \(i\) is odd.<br />For MOD2 S-SWNTs, \(\gamma(p)\) is negative when \(i\) is odd and positive when \(i\) is even.\(\quad[2][3]\)</td>
+                </tr>
+                <tr>
+                    <td colspan=5>$$\begin{align*}\omega_\mathrm{RBM}=\frac{A}{d_t}+B\end{align*}$$\(A=217.8\ \mathrm{nm\ cm^{-1}},B=15.7\ \mathrm{cm^{-1}}\quad[4]\)</td>
+                </tr>
+                <tr style="text-align: left;"><td colspan=5><a target='_blank' href='http://doi.org/10.1021/acsnano.6b04453'>[1] Zhang, D. Q. <i>et al.</i> (n,m) Assignments of Metallic Single-Walled Carbon Nanotubes by Raman Spectroscopy: The Importance of Electronic Raman Scattering. <i>ACS Nano</i> <b>10</b>, 10789-10797 (2016).<br /></a><a target='_blank' href='http://doi.org/10.1002/pssb.201000239'>[2] Soares, J. S. <i>et al.</i> The Kataura plot for single wall carbon nanotubes on top of crystalline quartz. <i>Phys. Stat. Soli. B</i> <b>247</b>, 2835-2837 (2010).<br /></a><a target='_blank' href='http://doi.org/10.1038/nnano.2012.52'>[3] Liu, K. H. <i>et al.</i> An atlas of carbon nanotube optical transitions. <i>Nat. Nanotech.</i> <b>7</b>, 325-329 (2012).<br /></a><a target='_blank' href='http://doi.org/10.1103/PhysRevLett.98.067401'>[4] Araujo, P. T. <i>et al.</i> Third and fourth optical transitions in semiconducting carbon nanotubes. <i>Phys. Rev. Lett.</i> <b>98</b>, 067401 (2007).</a></td></tr>
+            </table>
+            <table class="table table-striped math" style="display: none;">
+                <tr>
+                    <td colspan=4>$$\begin{align*}E_{ii}(p)=a\frac{p}{d_t}(1+b\log\frac{c}{p/d_t})+\frac{\beta_p}{d_t^2}\cos(3\theta)+\Delta(p)\end{align*}$$\(a=1.074\ \mathrm{eV\ nm},b=0.467\ \mathrm{nm^{-1}},c=0.812\ \mathrm{nm^{-1}}\)<br />\(p\lt3:\ \Delta(p)=0.059p/d_t\ \mathrm{eV}\)<br />\(p\ge3:\ \Delta(p)=0\quad[1]\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(p\)</td>
+                    <td colspan=1>\(E_{ii}\)</td>
+                    <td colspan=1>\(\beta_p/(\mathrm{eV\ nm^2})\ (M_{ii}^-\ \mathrm{or\ MOD1})\)</td>
+                    <td colspan=1>\(\beta_p/(\mathrm{eV\ nm^2})\ (M_{ii}^+\ \mathrm{or\ MOD2})\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(1\)</td>
+                    <td colspan=1>\(S_{11}\)</td>
+                    <td colspan=1>\(0.09\)</td>
+                    <td colspan=1>\(-0.07\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(2\)</td>
+                    <td colspan=1>\(S_{22}\)</td>
+                    <td colspan=1>\(-0.18\)</td>
+                    <td colspan=1>\(0.14\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(3\)</td>
+                    <td colspan=1>\(M_{11}^\pm\)</td>
+                    <td colspan=1>\(-0.19\)</td>
+                    <td colspan=1>\(0.29\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(4\)</td>
+                    <td colspan=1>\(S_{33}\)</td>
+                    <td colspan=1>\(0.49\)</td>
+                    <td colspan=1>\(-0.33\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(5\)</td>
+                    <td colspan=1>\(S_{44}\)</td>
+                    <td colspan=1>\(-0.43\)</td>
+                    <td colspan=1>\(0.59\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(6\)</td>
+                    <td colspan=1>\(M_{22}^\pm\)</td>
+                    <td colspan=1>\(-0.60\)</td>
+                    <td colspan=1>\(0.57\)</td>
+                </tr>
+                <tr>
+                    <td colspan=4>$$\begin{align*}\omega_\mathrm{RBM}=\frac{A}{d_t}+B\end{align*}$$\(A=227.0\ \mathrm{nm\ cm^{-1}},B=0.3\ \mathrm{cm^{-1}}\quad[2]\)</td>
+                </tr>
+                <tr style="text-align: left;"><td colspan=4><a target='_blank' href='http://doi.org/10.1016/j.physe.2010.01.015'>[1] Araujo, P. T. <i>et al.</i> Resonance Raman spectroscopy of the radial breathing modes in carbon nanotubes. <i>Phys. E</i> <b>42</b>, 1251-1261 (2010).<br /></a><a target='_blank' href='http://doi.org/10.1103/PhysRevB.77.241403'>[2] Araujo, P. T. <i>et al.</i> Nature of the constant factor in the relation between radial breathing mode frequency and tube diameter for single-wall carbon nanotubes. <i>Phys. Rev. B</i> <b>77</b>, 241403 (2008).</a></td></tr>
+            </table>
+            <table class="table table-striped math" style="display: none;">
+                <tr>
+                    <td colspan=4>$$\begin{align*}& E_{ii}(p)=\frac{1}{\alpha+\beta d_t}+\frac{\gamma(p)}{d_t^2}\cos(3\theta)\end{align*}$$\(\alpha=0.1270\ \mathrm{eV^{-1}},\beta=0.8606\ \mathrm{nm^{-1}\ eV^{-1}}\quad[1]\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(p\)</td>
+                    <td colspan=1>\(E_{ii}\)</td>
+                    <td colspan=1>\(\gamma_p/(\mathrm{eV\ nm^2})\ (\mathrm{MOD1})\)</td>
+                    <td colspan=1>\(\gamma_p/(\mathrm{eV\ nm^2})\ (\mathrm{MOD2})\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(1\)</td>
+                    <td colspan=1>\(S_{11}\)</td>
+                    <td colspan=1>\(0.0458\)</td>
+                    <td colspan=1>\(-0.0700\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(2\)</td>
+                    <td colspan=1>\(S_{22}\)</td>
+                    <td colspan=1>\(-0.1829\)</td>
+                    <td colspan=1>\(0.1400\)</td>
+                </tr>
+                <tr>
+                    <td colspan=4>$$\begin{align*}\omega_\mathrm{RBM}=\frac{A}{d_t}+B\end{align*}$$\(A=223.5\ \mathrm{nm\ cm^{-1}},B=12.5\ \mathrm{cm^{-1}}\quad[1]\)</td>
+                </tr>
+                <tr style="text-align: left;"><td colspan=4><a target='_blank' href='http://doi.org/10.1126/science.1078727'>[1] Bachilo, S. M. <i>et al.</i> Structure-assigned optical spectra of single-walled carbon nanotubes. <i>Science</i> <b>298</b>, 2361-2366 (2002).</a></td></tr>
+            </table>
+            <table class="table table-striped math" style="display: none;">
+                <tr>
+                    <td colspan=4>$$\begin{align*}& E_{ii}(p)=\frac{1}{\alpha+\beta d_t}+\frac{\gamma(p)}{d_t^2}\cos(3\theta)\end{align*}$$\(\alpha=0.1270\ \mathrm{eV^{-1}},\beta=0.8606\ \mathrm{nm^{-1}\ eV^{-1}}\quad[1]\)<br />All \(E_{ii}\) are \(20\ \mathrm{meV}\) redshifted from SDS-dispersed SWNTs (below).\(\quad[2]\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(p\)</td>
+                    <td colspan=1>\(E_{ii}\)</td>
+                    <td colspan=1>\(\gamma_p/(\mathrm{eV\ nm^2})\ (\mathrm{MOD1})\)</td>
+                    <td colspan=1>\(\gamma_p/(\mathrm{eV\ nm^2})\ (\mathrm{MOD2})\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(1\)</td>
+                    <td colspan=1>\(S_{11}\)</td>
+                    <td colspan=1>\(0.0458\)</td>
+                    <td colspan=1>\(-0.0700\)</td>
+                </tr>
+                <tr>
+                    <td colspan=1>\(2\)</td>
+                    <td colspan=1>\(S_{22}\)</td>
+                    <td colspan=1>\(-0.1829\)</td>
+                    <td colspan=1>\(0.1400\)</td>
+                </tr>
+                <tr>
+                    <td colspan=4>$$\begin{align*}\omega_\mathrm{RBM}=\frac{A}{d_t}+B\end{align*}$$\(A=218\ \mathrm{nm\ cm^{-1}},B=18.3\ \mathrm{cm^{-1}}\quad[3]\)</td>
+                </tr>
+                <tr style="text-align: left;"><td colspan=4><a target='_blank' href='http://doi.org/10.1126/science.1078727'>[1] Bachilo, S. M. <i>et al.</i> Structure-assigned optical spectra of single-walled carbon nanotubes. <i>Science</i> <b>298</b>, 2361-2366 (2002).<br /></a><a target='_blank' href='http://doi.org/10.1038/nature08116'>[2] Tu, X. M. <i>et al.</i> DNA sequence motifs for structure-specific recognition and separation of carbon nanotubes. <i>Nature</i> <b>460</b>, 250-253 (2009).<br /></a><a target='_blank' href='http://doi.org/10.1016/j.cplett.2007.03.085'>[3] Fantini, C. <i>et al.</i> Characterization of DNA-wrapped carbon nanotubes by resonance Raman and optical absorption spectroscopies. <i>Chem. Phys. Lett.</i> <b>439</b>, 138-142 (2007).</a></td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- end content -->
+
+    <hr />
+    <footer>
+        <p>&copy; 2009&ndash;2018 Nanomaterials & Nanostructures Group, Peking University. All rights reserved.</p>
+        <p>
+            Please contact <b>Prof. Juan Yang, yang_juan(at)pku.edu.cn</b> for any scientific issues.<br />
+            Please contact <b>Sida Sun, accel(at)pku.edu.cn</b>
+            <a href="https://github.com/visualer">(site developer)</a>  for any technical assistance.
+        </p>
+        <p><br /></p>
+        <div align='center'>
+            <a href='http://www.hit-counts.com'>
+                <img src='http://www.hit-counts.com/counter.php?t=MTQxNzMzNQ==' border='0' alt='Web Counter'>
+            </a><BR><a href='http://www.hit-counts.com'>Web Counter</a></div>
+    </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-AMS_SVG-full,Safe&locale=en">
+</script>
+<script>
+    if (MathJax === undefined)
+        $.getScript("https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js");
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        showProcessingMessages: false,
+        showMathMenu: false,
+        messageStyle: "none",
+        tex2jax: {
+            processEscapes: true,
+            preview: "none"
+        }
+    });
+    MathJax.Hub.Register.StartupHook("End", function () {
+        $(".math").removeClass("math");
+    });
+    MathJax.Hub.Register.MessageHook("New Math", function () {
+        $(".math").removeClass("math");
+    });
+</script>
+
+<script src="js/UrlParams.js"></script>
+<script src="js/Energy.js"></script>
+<script src="js/main.js"></script>
+<script src="js/Plot.js"></script>
+
+<!-- script -->
+
+<script>
+    let type = urlParams['Type'];
+    if (!/^\d+$/.test(type) || type > 5 && type < 0)
+        location.href = "Step1.html";
+
+    $("#title")[0].innerHTML += ' <small>' + typeArr[type] + '</small>';
+    $("#slType").selectpicker('val', type);
+    $("#dataTables").find("table")[type].style.display = "";
+
+    let $selectP1 = $("#slP1"), $selectP2 = $("#slP2");
+    let $selectP1P2 = $("#slP1, #slP2");
+    if (type >= 3) {
+        let threshold = (type === 3 ? 8 : 2);
+        $selectP1P2.find("option").each(function () {
+            let $this = $(this), value = parseInt($this.val());
+            if (value >= threshold)
+                $this.remove();
+        });
+    }
+    $selectP1P2.selectpicker('refresh');
+
+    $("select").on("loaded.bs.select", clearTitle);
+    $selectP1.on('changed.bs.select', function (e, index) {
+        let i = index - 1;
+        clearTitle(); // only when slP1 changes the title have to be cleared; only active select
+        $selectP2.find("option").each(function () {
+            let value = parseInt($(this).val());
+            if (i % 2 === 0 && value === i + 1 || i % 2 === 1 && value === i - 1)
+                $selectP2.selectpicker('val', value);
+        });
+    });
+</script>
+
+<!-- Global Site Tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107272975-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments) }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-107272975-1');
+</script>
+</body>
+</html>
+
+
