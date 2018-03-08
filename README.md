@@ -1,4 +1,4 @@
-# Chirality Assignment Program of SWCNT [![CodeFactor](https://www.codefactor.io/repository/github/visualer/ntassign-js/badge)](https://www.codefactor.io/repository/github/visualer/ntassign)
+# Chirality Assignment Program of SWCNT [![CodeFactor](https://www.codefactor.io/repository/github/visualer/ntassign-js/badge)](https://www.codefactor.io/repository/github/visualer/ntassign-js)
 
 ## Overview
 
