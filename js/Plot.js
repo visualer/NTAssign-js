@@ -1,6 +1,7 @@
 function drawPlot(placeholder, params) {
-    let defaultRadius = 4, xmin = params.point[0] - 0.5, xmax = params.point[0] + 0.5;
-    let ymin = params.isMetal ? -0.01 : params.point[1] - 0.4, ymax = params.isMetal ? 0.45 : params.point[1] + 0.4;
+
+    let defaultRadius = 4, xMin = params.point[0] - 0.5, xMax = params.point[0] + 0.5;
+    let yMin = params.isMetal ? -0.01 : params.point[1] - 0.4, yMax = params.isMetal ? 0.45 : params.point[1] + 0.4;
     let font = {
         size: 20,
         lineHeight: 20,
@@ -11,18 +12,17 @@ function drawPlot(placeholder, params) {
             // aver
             show: true,
             position: "bottom",
-            min: xmin,
-            max: xmax,
+            min: xMin,
+            max: xMax,
             font: font,
             tickLength: 10,
             tickColor: "rgb(255, 0, 0)",
             color: "rgb(255, 0, 0)"
         },
         yaxis: {
-            // PLOTTING PARAMETERS ALSO OCCUR IN plotmodel.cs
             show: true,
-            min: ymin,
-            max: ymax,
+            min: yMin,
+            max: yMax,
             font: font,
             tickLength: 10,
             tickColor: "rgb(0, 0, 0)",
@@ -166,11 +166,8 @@ function drawPlot(placeholder, params) {
             shadowSize: 0
         });
 
-
-
     let $placeholder = $("#" + placeholder);
     let plot = $.plot($placeholder, series, options);
-
 
     let previousPoint = null;
     $placeholder.bind("plothover", function(event, pos, item) {
@@ -196,8 +193,10 @@ function drawPlot(placeholder, params) {
             let o = plot.pointOffset({ x: p[0], y: p[1] });
             let axes = plot.getAxes();
             let xaxis = axes.xaxis, yaxis = axes.yaxis;
-            if (i % 2 === s % 2 && p[0] <= xaxis.max && p[0] >= xaxis.min && p[1] <= yaxis.max - 0.05 && p[1] >= yaxis.min + 0.05)
-                $placeholder.append("<div class='series_label' style='text-align:center;font-size:20px;position:absolute;left:" + (o.left - (i === s ? 60 : 10)) +
+            if (i % 2 === s % 2 && p[0] <= xaxis.max && p[0] >= xaxis.min &&
+                p[1] <= yaxis.max - 0.05 && p[1] >= yaxis.min + 0.05)
+                $placeholder.append("<div class='series_label' " +
+                    "style='text-align:center;font-size:20px;position:absolute;left:" + (o.left - (i === s ? 60 : 10)) +
                     "px;top:" + (o.top - 30) + "px;'><p>" +
                     (i === s ? "2<i>n</i>+<i>m</i>=" : "") + (p1[0] * 2 + p1[1]) + "</p></div>"
                 );
@@ -216,12 +215,15 @@ function drawPlot(placeholder, params) {
             let div = Math.round((p1[0] * 2 + p1[1]) / 3);
             let mod = (p1[0] * 2 + p1[1]) % 3;
             if (divMid % 2 === div % 2) {
-                if (p[0] <= xaxis.max - 0.02 && p[0] >= xaxis.min + 0.02 && p[1] <= yaxis.max - 0.1 && p[1] >= yaxis.min + 0.1)
-                    $placeholder.append("<div class='series_label' style='text-align:center;font-size:20px;position:absolute;" +
+                if (p[0] <= xaxis.max - 0.02 && p[0] >= xaxis.min + 0.02 && p[1] <= yaxis.max - 0.1 &&
+                    p[1] >= yaxis.min + 0.1)
+                    $placeholder.append("<div class='series_label' " +
+                        "style='text-align:center;font-size:20px;position:absolute;" +
                         "color:" + (mod === 1 ? "#FF0000" : "#000000") +
                         ";left:" +
                         (o.left - (divMid === div ? 60 : 10)) +
-                        "px;top:" + (o.top - (mod === 1 ? -15 : divMid === div && p[1] <= yaxis.max - 0.15 && p[1] >= yaxis.min + 0.18 ? 60 : 30)) + "px;'><p>" +
+                        "px;top:" + (o.top - (mod === 1 ? -15 : divMid === div && p[1] <= yaxis.max - 0.15 &&
+                        p[1] >= yaxis.min + 0.18 ? 60 : 30)) + "px;'><p>" +
                         (divMid === div ? (mod === 2 && p[1] <= yaxis.max - 0.15 ? "<b>MOD2</b><br/>" : "") +
                             "2<i>n</i>+<i>m</i>=" : "") +
                         (p1[0] * 2 + p1[1]) +
@@ -231,11 +233,12 @@ function drawPlot(placeholder, params) {
             }
         }
     }
+
     for (let i = 0; i < params.rbm.length; i++) {
         if (i % 2 === 0 || params.rbm.length === 1) {
-            let o1 = plot.pointOffset({ x: params.rbmPos[i], y: ymax });
-            $placeholder.append("<div class='axis_label' style='color:#0000FF;font-size:20px;position:absolute;left:" + (o1.left - 15) +
-                "px;top:" + (o1.top - 30) + "px;'><p>" +
+            let o1 = plot.pointOffset({ x: params.rbmPos[i], y: yMax });
+            $placeholder.append("<div class='axis_label' style='color:#0000FF;font-size:20px;position:absolute;left:" +
+                (o1.left - 15) + "px;top:" + (o1.top - 30) + "px;'><p>" +
                 params.rbmLabel[i] + "</p></div>"
             );
         }

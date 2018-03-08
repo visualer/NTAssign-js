@@ -37,7 +37,7 @@ function E1R1(params)
         pLesser: pToLesser[p],
         type: type,
         pointType: "none",
-        p1Lesser: P1ToLesser(p1),
+        p1Lesser: p1ToLesser(p1),
         resultString: resultString
     });
 
@@ -83,7 +83,7 @@ function E1R1(params)
         pLesser: p,
         type: type,
         pointType: "green",
-        p1Lesser: P1ToLesser(p1),
+        p1Lesser: p1ToLesser(p1),
         resultString: resultString
     }, modAnother);
 
@@ -170,7 +170,8 @@ function Assign(params, mod = -1) {
     function processOutput() {
         params.result = query.orderBy(Dist_).toArray();
         for (let i = 0; i < params.result.length; i++)
-            params.resultString += "<b>(" + Math.round(params.result[i][0]) + "," + Math.round(params.result[i][1]) + ")</b>" +
+            params.resultString += "<b>(" + Math.round(params.result[i][0]) + "," +
+                Math.round(params.result[i][1]) + ")</b>" +
                 (i !== params.result.length - 1 ? ", " : "");
         params.resultString += "</span>";
     }
@@ -221,7 +222,8 @@ function Assign(params, mod = -1) {
     if (Dist_(tmp[0]) / Dist_(tmp[1]) <= 0.5 && query.count() !== 0) {
         params.ar = AssignResult.impossible;
         query = Enumerable.from([ tmp[0] ]);
-        params.resultString += "No match. The most possible assignment result is:<br /><span style=\"font-size: 28px;\">";
+        params.resultString += "No match. The most possible assignment result is:<br />" +
+            "<span style=\"font-size: 28px;\">";
         processOutput();
         return params;
     }

@@ -42,7 +42,7 @@ const p1Arr_raw = [
 
 const p1ToP = [ 0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8 ];
 const pToLesser = [ 0, 0, 2, 3, 3, 5, 6, 6, 9 ];
-const P1ToLesser = (p1) => p1 % 2 === 0 ? p1 : p1 - 1;
+const p1ToLesser = (p1) => p1 % 2 === 0 ? p1 : p1 - 1;
 
 const Dt = (n, m, type) => ((type !== 4) ? 0.142 : 0.144) * Math.sqrt(3 * (n * n + n * m + m * m)) / Math.PI;
 const Theta = (n, m) => Math.atan(Math.sqrt(3) * m / (2 * n + m));

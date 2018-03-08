@@ -6,11 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-compatible" content="IE=edge, chrome=1">
     <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <title>Step2</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet"/>
-    <!--<link href="css/bootstrap-theme.min.css" rel="stylesheet"/>-->
-    <link href="css/bootstrap-select.min.css" rel="stylesheet"/>
-    <link href="css/site.css" rel="stylesheet"/>
+    <title>Step 2</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
 
     <script src="js/lib/jquery-3.3.1.min.js"></script>
     <script src="js/lib/jquery.validate.min.js"></script>
@@ -21,6 +20,9 @@
     <script src="js/lib/modernizr-2.8.3.js"></script>
     <script src="js/lib/respond.min.js"></script>
     <script src="js/lib/flot/jquery.flot.min.js"></script>
+    <script src="js/lib/flot/jquery.flot.fillbetween.min.js"></script>
+    <script src="js/lib/flot/jquery.flot.symbol.min.js"></script>
+    <script src="js/lib/linq.min.js"></script>
 
 </head>
 <body>
@@ -137,7 +139,7 @@
                 </div>
             </form>
 
-            <form onsubmit="return false;">
+            <form onsubmit="return false;" id="calculatorForm">
                 <div class="row">
                     <h1 id="calcTitle" style="padding: 8px; border-radius: 4px;"
                         class="col-lg-9 col-md-11 col-sm-8 col-xs-9 col-lg-offset-1 col-md-offset-0_5
@@ -157,11 +159,11 @@
                                type="text" />
                     </div>
                     <label class="control-label col-auto">)</label>
-                    <input type="submit" value="Calculate" class="btn btn-primary" style="margin-left: 6%;" />
+                    <input type="submit" value="Calculate" class="btn btn-primary"
+                           style="margin-left: 6%;" onclick="calculate($('#calculatorForm')[0]);" />
                 </div>
             </form>
-            <div class="col-md-10 col-sm-8 col-xs-8">
-                <!--@Html.Partial("Calc")-->
+            <div class="col-md-10 col-sm-8 col-xs-8" id="calcResult">
             </div>
         </div>
 
@@ -530,6 +532,30 @@
         </div>
     </div>
 
+    <div id="containerTemplate" class="math" oncontextmenu="return false"
+         onmousedown="return false" style="display: none;">
+        <div class="row">
+            <div class="col-lg-offset-2 col-md-offset-6 axis-label rbmAxisLabel"
+                 style="text-align: center; font-size: 16px; color: #0000FF">
+            </div>
+        </div>
+        <br />
+        <div class="row" style="position: relative;">
+            <div>
+                <div style="position: absolute; top: 70%; left: 2%; font-size: 16px; transform: rotate(-90deg);
+                        transform-origin: top left;" class="axis-label xAxisLabel">
+                </div>
+            </div>
+            <div id="plotPlaceholder" style="width: 400px; height: 290px; font-family: serif;"
+                 class="col-md-offset-1 col-xs-offset-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-offset-2 col-md-offset-5 axis-label yAxisLabel"
+                 style="text-align: center; font-size: 16px; color: #FF0000">
+            </div>
+        </div>
+    </div>
+
     <!-- end content -->
 
     <hr />
@@ -574,17 +600,18 @@
 
 <script src="js/UrlParams.js"></script>
 <script src="js/Energy.js"></script>
+<script src="js/Assign.js"></script>
 <script src="js/main.js"></script>
 <script src="js/Plot.js"></script>
 
 <!-- script -->
 
 <script>
-    let type = urlParams['Type'];
-    if (!/^\d+$/.test(type) || type > 5 && type < 0)
+    let type = parseInt(urlParams['Type']);
+    if (isNaN(type) || type > 5 || type < 0)
         location.href = "Step1.html";
 
-    $("#title")[0].innerHTML += ' <small>' + typeArr[type] + '</small>';
+    $("#title")[0].innerHTML += '<small>' + typeArr[type] + '</small>';
     $("#slType").selectpicker('val', type);
     $("#dataTables").find("table")[type].style.display = "";
 
