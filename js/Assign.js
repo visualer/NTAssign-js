@@ -22,8 +22,8 @@ function getPlotParams(params) {
     }
 }
 
-function E1R1(params)
-{
+function E1R1(params) {
+
     let p1 = (params.val1 === "" ? params.p2 : params.p1), type = params.type, p = p1ToP[p1]; // int
     let val = parseFloat(params.val1 === "" ? params.val2 : params.val1); // float
     let wRBM = parseFloat(params.rbm); // float, integrity checked in getPlotParam

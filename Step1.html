@@ -12,9 +12,6 @@
     <link href="css/site.css" rel="stylesheet" />
 
     <script src="js/lib/jquery-3.3.1.min.js"></script>
-    <script src="js/lib/jquery.validate.min.js"></script>
-    <script src="js/lib/jquery.validate.unobtrusive.min.js"></script>
-    <!-- no need to ajax now -->
     <script src="js/lib/bootstrap.min.js"></script>
     <script src="js/lib/bootstrap-select.min.js"></script>
     <script src="js/lib/modernizr-2.8.3.js"></script>
@@ -23,6 +20,7 @@
     <script src="js/lib/flot/jquery.flot.fillbetween.min.js"></script>
     <script src="js/lib/flot/jquery.flot.symbol.min.js"></script>
     <script src="js/lib/linq.min.js"></script>
+    <script src="js/lib/es-checker.js"></script>
 
 </head>
 <body>
@@ -32,6 +30,29 @@
     </a>
 
     <!-- start content -->
+
+    <div id="es6Dimmer" class="modal fade" role="dialog" style="top: 30%;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3 style="text-align: center;">
+                        Your browser doesn't support ECMAScript 6 (ES2015), and the program can't work properly.
+                        <br /><br /> IE-based browsers are deprecated now.
+                        Using Edge, Chrome, Firefox will be better.
+                    </h3>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" href="https://www.google.com/chrome/" class="btn btn-primary" >
+                        Download Chrome
+                    </a>
+                    <a type="button" href="https://www.firefox.com.cn/" class="btn btn-primary" >
+                        Download Firefox
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <h3 class="text-center">
         (n,m) Assignment Program for SWNTs Under Complex Environments
     </h3>
@@ -117,7 +138,7 @@
 </script>
 <script>
     if (MathJax === undefined)
-        $.getScript("https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js");
+        $.getScript("https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS_SVG-full,Safe&locale=en");
 </script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -145,6 +166,9 @@
 
 <!-- script -->
 <script>
+    if (!Supports.arrow)
+        $(".modal").modal({ backdrop: "static" });
+
     $("#slType")
         .on("loaded.bs.select", clearTitle)
         .on('changed.bs.select', clearTitle);
