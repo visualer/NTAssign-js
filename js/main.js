@@ -1,9 +1,27 @@
 ﻿
-function clearTitle() {
+'use strict';
+
+let urlParams;
+(window.onpopstate = function () {
+    let match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query  = window.location.search.substring(1);
+
+    urlParams = {};
+    while (match = search.exec(query))
+        urlParams[decode(match[1])] = decode(match[2]);
+})();
+
+function clearTitle() { // used in Step1 and Step2
+
     $(".bootstrap-select").find("button").removeAttr("title");
+
 }
 
-function validate(form) {
+function validate(form) { // used in Step2
+
     let $hint = $("#hint");
     let invokeError = (msg) => {
         $hint.addClass("alert-danger")
@@ -29,22 +47,24 @@ function validate(form) {
     }
 }
 
-function changeEdit(mainP1, val1, val2) {
+function changeEdit(mainP1, val1, val2) { // used in Step2
+
     $("#slP1").selectpicker('val', mainP1);
     $("#slP2").selectpicker('val', mainP1 + 1);
     $("#edVal1").val(val1);
     $("#edVal2").val(val2);
+
 }
 
-function calculate(form) {
+function calculate(form) { // used in Step2
 
     let n = parseInt(form.NCalc.value), m = parseInt(form.MCalc.value), t = type;
     if (n < m) [n, m] = [m, n];
     if (isNaN(n) || isNaN(m) || n <= 6 || m <= 0) return;
 
     let $result = $("<tbody></tbody>");
-    $result.append("<tr><td>\\(d_t\\)</td><td>\\(" + Dt(n, m, t).toFixed(3).toString()
-        + "\\ \\mathrm{nm}\\)</td></tr>");
+    $result.append(`<tr><td>\\(d_t\\)</td><td>\\( ${Dt(n, m, t).toFixed(3).toString()} \\ \\mathrm{nm}\\)</td></tr>`);
+
 
     let isAirSuspended = (t === 0);
     let editRBM = (e) => $('#edRBM').val(e);
@@ -53,12 +73,11 @@ function calculate(form) {
         let rbmAS = dt2RBM(Dt(n, m, t), isMetal(n, m) ? 2 : 0, t).toFixed(1).toString();
 
         $result.append(
-            $(
-                "<tr><td>\\(\\omega_\\mathrm{RBM}\\ " +
-                (isMetal(n, m) ? "(p=3)" : "(p=1,2)") +
-                "\\)</td><td>\\(" +
-                rbmAS +
-                "\\ \\mathrm{cm^{-1}}\\)</td></tr>"
+            $(`
+                <tr>
+                    <td>\\(\\omega_\\mathrm{RBM}\\ ${isMetal(n, m) ? "(p=3)" : "(p=1,2)"} \\)</td>
+                    <td>\\( ${rbmAS} \\ \\mathrm{cm^{-1}}\\)</td>
+                </tr>`
             )
                 .click(() => editRBM(rbmAS))
                 .css("cursor", "pointer")
@@ -67,13 +86,12 @@ function calculate(form) {
 
     let rbmGeneral = dt2RBM(Dt(n, m, t), isAirSuspended ? 3 : 0, t).toFixed(1).toString();
     $result.append(
-        $(
-            "<tr><td>\\(\\omega_\\mathrm{RBM}\\ " +
-            (isAirSuspended ? "(p>3)" : "") +
-            "\\)</td><td>\\(" +
-            rbmGeneral +
-            "\\ \\mathrm{cm^{-1}}\\)</td></tr>"
-        )
+        $(`
+            <tr>
+                <td>\\(\\omega_\\mathrm{RBM}\\ ${isAirSuspended ? "(p>3)" : ""} \\)</td>
+                <td>\\( ${rbmGeneral} \\ \\mathrm{cm^{-1}}\\)</td>
+            </tr>
+        `)
             .click(() => editRBM(rbmGeneral))
             .css("cursor", "pointer")
     );
@@ -97,7 +115,7 @@ function calculate(form) {
         let i1 = (i % 2 === 0 ? i : i - 1);
 
         $result.append(
-            $("<tr><td>" + p1Arr[keyArr[i]] + "</td><td>\\(" + valArr[i] + "\\ \\mathrm{eV}\\)</td></tr>")
+            $(`<tr><td>${p1Arr[keyArr[i]]}</td><td>\\(${valArr[i]}\\ \\mathrm{eV}\\)</td></tr>`)
                 .click(() => changeEdit(keyArr[i1], valArr[i1], valArr[i1 + 1]))
                 .css("cursor", "pointer")
         );

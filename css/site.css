@@ -9,8 +9,8 @@
     padding-right: 15px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
+/* Override the default bootstrap behavior where horizontal description lists
+   will truncate terms that are too long to fit in the left column
 */
 .dl-horizontal dt {
     white-space: normal;
@@ -21,6 +21,18 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.series_label {
+    text-align: center;
+    font-size: 20px;
+    position: absolute;
+}
+
+.rbm_label {
+    color: #0000FF;
+    font-size: 20px;
+    position: absolute;
 }
 
 .math {

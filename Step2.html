@@ -556,23 +556,23 @@
     <div id="containerTemplate" class="math" oncontextmenu="return false"
          onmousedown="return false" style="display: none;">
         <div class="row">
-            <div class="col-lg-offset-2 col-md-offset-6 axis-label rbmAxisLabel"
-                 style="text-align: center; font-size: 16px; color: #0000FF">
+            <div class="col-lg-offset-2 col-md-offset-6 rbmAxisLabel"
+                 style="text-align: center; font-size: 18px; color: #0000FF;">
             </div>
         </div>
         <br />
         <div class="row" style="position: relative;">
             <div>
-                <div style="position: absolute; top: 70%; left: 2%; font-size: 16px; transform: rotate(-90deg);
-                        transform-origin: top left;" class="axis-label yAxisLabel">
+                <div style="position: absolute; top: 70%; left: 2%; font-size: 18px; transform: rotate(-90deg);
+                        transform-origin: top left;" class="yAxisLabel">
                 </div>
             </div>
             <div id="plotPlaceholder" style="width: 400px; height: 290px; font-family: serif;"
                  class="col-md-offset-1 col-xs-offset-1"></div>
         </div>
         <div class="row">
-            <div class="col-lg-offset-2 col-md-offset-5 axis-label xAxisLabel"
-                 style="text-align: center; font-size: 16px; color: #FF0000">
+            <div class="col-lg-offset-2 col-md-offset-5 xAxisLabel"
+                 style="text-align: center; font-size: 18px; color: #FF0000;">
             </div>
         </div>
     </div>
@@ -619,7 +619,6 @@
     });
 </script>
 
-<script src="js/UrlParams.js"></script>
 <script src="js/Energy.js"></script>
 <script src="js/Assign.js"></script>
 <script src="js/main.js"></script>
@@ -628,7 +627,7 @@
 <!-- script -->
 
 <script>
-    if (!Supports.arrow)
+    if (!Supports.arrow || !Supports.templateString || !Supports.letConst)
         $(".modal").modal({ backdrop: "static" });
 
     let type = parseInt(urlParams['Type']);

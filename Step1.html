@@ -162,7 +162,6 @@
     });
 </script>
 
-<script src="js/UrlParams.js"></script>
 <script src="js/Energy.js"></script>
 <script src="js/Assign.js"></script>
 <script src="js/main.js"></script>
@@ -170,7 +169,7 @@
 
 <!-- script -->
 <script>
-    if (!Supports.arrow)
+    if (!Supports.arrow || !Supports.templateString || !Supports.letConst)
         $(".modal").modal({ backdrop: "static" });
 
     $("#slType")

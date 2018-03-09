@@ -33,11 +33,13 @@ const betap =[
 ];
 
 const p1Arr = [
-    "\\(S_{11}\\)", "\\(S_{22}\\)", "\\(M_{11}^-\\)", "\\(M_{11}^+\\)", "\\(S_{33}\\)", "\\(S_{44}\\)", "\\(M_{22}^-\\)", "\\(M_{22}^+\\)", "\\(S_{55}\\)", "\\(S_{66}\\)", "\\(M_{33}^-\\)", "\\(M_{33}^+\\)"
+    "\\(S_{11}\\)", "\\(S_{22}\\)", "\\(M_{11}^-\\)", "\\(M_{11}^+\\)", "\\(S_{33}\\)", "\\(S_{44}\\)",
+    "\\(M_{22}^-\\)", "\\(M_{22}^+\\)", "\\(S_{55}\\)", "\\(S_{66}\\)", "\\(M_{33}^-\\)", "\\(M_{33}^+\\)"
 ];
 
 const p1Arr_raw = [
-    "S_{11}", "S_{22}", "M_{11}^-", "M_{11}^+", "S_{33}", "S_{44}", "M_{22}^-", "M_{22}^+", "S_{55}", "S_{66}", "M_{33}^-", "M_{33}^+"
+    "S_{11}", "S_{22}", "M_{11}^-", "M_{11}^+", "S_{33}", "S_{44}", "M_{22}^-", "M_{22}^+", "S_{55}", "S_{66}",
+    "M_{33}^-", "M_{33}^+"
 ];
 
 const p1ToP = [ 0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8 ];
@@ -49,7 +51,10 @@ const Theta = (n, m) => Math.atan(Math.sqrt(3) * m / (2 * n + m));
 const Mod = (n, m) => (2 * n + m) % 3;
 const isMetalP = (p) => (p + 1) % 3 === 0;
 const isMetalNM = (n, m) => Mod(n, m) === 0;
-const isMetal = function () { return arguments.length === 2 ? isMetalNM(arguments[0], arguments[1]) : isMetalP(arguments[0]); };
+const isMetal = function () { return arguments.length === 2 ?
+    isMetalNM(arguments[0], arguments[1]) :
+    isMetalP(arguments[0]); };
+
 function getRBMParameters(p, type) {
     function Param(a, b) { this.a = a; this.b = b; }
     switch (type) {

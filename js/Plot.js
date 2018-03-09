@@ -195,11 +195,11 @@ function drawPlot(placeholder, params) {
             let xaxis = axes.xaxis, yaxis = axes.yaxis;
             if (i % 2 === s % 2 && p[0] <= xaxis.max && p[0] >= xaxis.min &&
                 p[1] <= yaxis.max - 0.05 && p[1] >= yaxis.min + 0.05)
-                $placeholder.append("<div class='series_label' " +
-                    "style='text-align:center;font-size:20px;position:absolute;left:" + (o.left - (i === s ? 60 : 10)) +
-                    "px;top:" + (o.top - 30) + "px;'><p>" +
-                    (i === s ? "2<i>n</i>+<i>m</i>=" : "") + (p1[0] * 2 + p1[1]) + "</p></div>"
-                );
+                $placeholder.append(`
+                    <div class='series_label' style='left: ${o.left - (i === s ? 60 : 10)}px; top: ${o.top - 30}px;'>
+                        <p>${i === s ? "2<i>n</i>+<i>m</i>=" : ""}${p1[0] * 2 + p1[1]}</p>
+                    </div>
+                `);
         }
     } else {
         let mid = Math.round(params.all.length / 2);
@@ -216,20 +216,33 @@ function drawPlot(placeholder, params) {
             let mod = (p1[0] * 2 + p1[1]) % 3;
             if (divMid % 2 === div % 2) {
                 if (p[0] <= xaxis.max - 0.02 && p[0] >= xaxis.min + 0.02 && p[1] <= yaxis.max - 0.1 &&
-                    p[1] >= yaxis.min + 0.1)
-                    $placeholder.append("<div class='series_label' " +
-                        "style='text-align:center;font-size:20px;position:absolute;" +
-                        "color:" + (mod === 1 ? "#FF0000" : "#000000") +
-                        ";left:" +
-                        (o.left - (divMid === div ? 60 : 10)) +
-                        "px;top:" + (o.top - (mod === 1 ? -15 : divMid === div && p[1] <= yaxis.max - 0.15 &&
-                        p[1] >= yaxis.min + 0.18 ? 60 : 30)) + "px;'><p>" +
-                        (divMid === div ? (mod === 2 && p[1] <= yaxis.max - 0.15 ? "<b>MOD2</b><br/>" : "") +
-                            "2<i>n</i>+<i>m</i>=" : "") +
-                        (p1[0] * 2 + p1[1]) +
-                        (divMid === div && mod === 1 && p[1] >= yaxis.min + 0.12? "<br/><b>MOD1</b>" : "") +
-                        "</p></div>"
-                    );
+                    p[1] >= yaxis.min + 0.1) {
+                    let dA = {
+                        color: mod === 1 ? "#FF0000" : "#000000",
+                        left: o.left - (divMid === div ? 60 : 10),
+                        top: o.top - (mod === 1 ? -15 : (
+                            divMid === div && p[1] <= yaxis.max - 0.15 && p[1] >= yaxis.min + 0.18 ? 60 : 30
+                            )
+                        ),
+                        c1: divMid === div
+                            ? (
+                                (mod === 2 && p[1] <= yaxis.max - 0.15
+                                    ? "<b>MOD2</b><br/>"
+                                    : "")
+                                + "2<i>n</i>+<i>m</i>="
+                            )
+                            : "",
+                        c2: p1[0] * 2 + p1[1],
+                        c3: divMid === div && mod === 1 && p[1] >= yaxis.min + 0.12
+                            ? "<br/><b>MOD1</b>"
+                            : ""
+                    };
+                    $placeholder.append(`
+                        <div class='series_label' style='color: ${dA.color}; left: ${dA.left}px; top: ${dA.top}px;'>
+                            <p>${dA.c1}${dA.c2}${dA.c3}</p>
+                        </div>
+                    `);
+                }
             }
         }
     }
@@ -237,20 +250,26 @@ function drawPlot(placeholder, params) {
     for (let i = 0; i < params.rbm.length; i++) {
         if (i % 2 === 0 || params.rbm.length === 1) {
             let o1 = plot.pointOffset({ x: params.rbmPos[i], y: yMax });
-            $placeholder.append("<div class='axis_label' style='color:#0000FF;font-size:20px;position:absolute;left:" +
-                (o1.left - 15) + "px;top:" + (o1.top - 30) + "px;'><p>" +
-                params.rbmLabel[i] + "</p></div>"
-            );
+            $placeholder.append(`
+                <div class='rbm_label' style='left: ${o1.left - 15}px; top: ${o1.top - 30}px;'>
+                    <p>${params.rbmLabel[i]}</p>
+                </div>
+            `);
         }
     }
 }
 
 function showTooltip(x, y, contents) {
-    $("<div id='tooltip' class='tooltip right in'><div class='tooltip-arrow' style='top: 50%;'>" +
-        "</div><div class='tooltip-inner'>" + contents + "</div></div>").css({
-        display: "block",
-        top: y,
-        left: x
-    }).appendTo("body").fadeIn(200);
+    $(`
+        <div id='tooltip' class='tooltip right in'>
+            <div class='tooltip-arrow' style='top: 50%;'></div>
+            <div class='tooltip-inner'>${contents}</div>
+        </div>
+    `)
+        .css({
+            display: "block",
+            top: y,
+            left: x
+        }).appendTo("body").fadeIn(200);
 }
 
