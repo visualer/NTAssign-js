@@ -380,5 +380,6 @@ function getRBMArray(pLesser, type) {
             else throw err;
         }
     }
+
     return d;
 }
