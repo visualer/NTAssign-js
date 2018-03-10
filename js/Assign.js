@@ -1,10 +1,6 @@
 
 'use strict';
 
-
-let uncertainty = 0;
-
-
 function getPlotParams(params) {
     let decimalDigits = (d) => d.split('.')[1].length;
 
@@ -12,10 +8,10 @@ function getPlotParams(params) {
         throw new Error('Unauthorized Access');
     } else if (params.val1 === "" || params.val2 === "") {
         if (params.rbm === "") throw new Error('Unauthorized Access');
-        uncertainty = 2.0 / Math.pow(10, decimalDigits(params.val1 === "" ? params.val2 : params.val1 ));
+        params.uncertainty = 2.0 / Math.pow(10, decimalDigits(params.val1 === "" ? params.val2 : params.val1 ));
         return E1R1(params);
     } else {
-        uncertainty = 2.0 / Math.pow(10,
+        params.uncertainty = 2.0 / Math.pow(10,
             Math.min(decimalDigits(params.val1), decimalDigits(params.val2))
         );
         return E2(params);
@@ -136,6 +132,7 @@ function Assign(params, mod = -1) {
     // params: plotParams
     // x: average y: splitting
 
+    let uncertainty = params.uncertainty;
     let dxMin = -1, dxMax = -1, dyMin = -1, dyMax = -1;
     let Dist = (x1, y1, x2, y2) => Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) * 25);
     let Dist_ = (e) => Dist(e[2], e[3], params.point[0], params.point[1]);

@@ -1,3 +1,6 @@
+
+'use strict';
+
 function drawPlot(placeholder, params) {
 
     let defaultRadius = 4, xMin = params.point[0] - 0.5, xMax = params.point[0] + 0.5;

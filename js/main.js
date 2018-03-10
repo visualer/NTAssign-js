@@ -14,10 +14,13 @@ let urlParams;
         urlParams[decode(match[1])] = decode(match[2]);
 })();
 
+if (!Supports.arrow || !Supports.templateString || !Supports.letConst)
+    $(".modal").modal({ backdrop: "static" });
+
+
 function clearTitle() { // used in Step1 and Step2
 
     $(".bootstrap-select").find("button").removeAttr("title");
-
 }
 
 function validate(form) { // used in Step2
@@ -53,7 +56,6 @@ function changeEdit(mainP1, val1, val2) { // used in Step2
     $("#slP2").selectpicker('val', mainP1 + 1);
     $("#edVal1").val(val1);
     $("#edVal2").val(val2);
-
 }
 
 function calculate(form) { // used in Step2

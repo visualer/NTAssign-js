@@ -141,12 +141,14 @@
     </footer>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-AMS_SVG-full,Safe&locale=en">
-</script>
 <script>
-    if (MathJax === undefined)
-        $.getScript("https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js");
+    $.getScript(navigator.language.substr(0, 2).toLowerCase() !== "zh"
+        ? "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js"
+        : "https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js"
+        + "?config=TeX-AMS_SVG-full,Safe&locale=en"
+    );
 </script>
+
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         showProcessingMessages: false,
@@ -172,8 +174,6 @@
 
 <!-- script -->
 <script>
-    if (!Supports.arrow || !Supports.templateString || !Supports.letConst)
-        $(".modal").modal({ backdrop: "static" });
 
     // check integrity
     for (let i of ['Type', 'P1', 'P2', 'Val1', 'Val2', 'RBM']) {
