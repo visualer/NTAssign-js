@@ -136,6 +136,7 @@
     });
     MathJax.Hub.Register.StartupHook("End", function () {
         $(".math").removeClass("math");
+        console.log("MathJax startup takes " + (performance.now() - timeStartup).toFixed(3));
     });
     MathJax.Hub.Register.MessageHook("New Math", function () {
         $(".math").removeClass("math");

@@ -53,12 +53,6 @@
                     </label>
                     <div class="col-md-6 col-sm-4 col-xs-8 col-xs-offset-0_5">
                         <select id="slType" name="Type" class="form-control selectpicker math" disabled="disabled">
-                            <option value="0">Air-suspended SWNTs</option>
-                            <option value="1">SWNTs on \(\mathrm{SiO_2}/\mathrm{Si}\) substrates</option>
-                            <option value="2">SWNT arrays on quartz substrates</option>
-                            <option value="3">&quot;Super-growth&quot; SWNTs</option>
-                            <option value="4">SDS-dispersed SWNTs</option>
-                            <option value="5">ssDNA-dispersed SWNTs</option>
                         </select>
                     </div>
                 </div>
@@ -68,18 +62,6 @@
                     </label>
                     <div class="col-lg-2 col-md-2_5 col-sm-2 col-xs-3 col-xs-offset-0_5">
                         <select id="slP1" name="P1" class="form-control selectpicker math" title="\(E_{ii}\)">
-                            <option value="0">\(S_{11}\)</option>
-                            <option value="1">\(S_{22}\)</option>
-                            <option value="2">\(M_{11}^-\)</option>
-                            <option value="3">\(M_{11}^+\)</option>
-                            <option value="4">\(S_{33}\)</option>
-                            <option value="5">\(S_{44}\)</option>
-                            <option value="6">\(M_{22}^-\)</option>
-                            <option value="7">\(M_{22}^+\)</option>
-                            <option value="8">\(S_{55}\)</option>
-                            <option value="9">\(S_{66}\)</option>
-                            <option value="10">\(M_{33}^-\)</option>
-                            <option value="11">\(M_{33}^+\)</option>
                         </select>
                     </div>
                     <label for="edVal1" class="control-label col-auto">=</label>
@@ -95,18 +77,6 @@
                     <div class="col-lg-2 col-md-2_5 col-sm-2 col-xs-3 col-xs-offset-0_5">
                         <select id="slP2" name="P2" class="form-control selectpicker" disabled="disabled"
                                 title="\(E_{ii}\)">
-                            <option value="0">\(S_{11}\)</option>
-                            <option value="1">\(S_{22}\)</option>
-                            <option value="2">\(M_{11}^-\)</option>
-                            <option value="3">\(M_{11}^+\)</option>
-                            <option value="4">\(S_{33}\)</option>
-                            <option value="5">\(S_{44}\)</option>
-                            <option value="6">\(M_{22}^-\)</option>
-                            <option value="7">\(M_{22}^+\)</option>
-                            <option value="8">\(S_{55}\)</option>
-                            <option value="9">\(S_{66}\)</option>
-                            <option value="10">\(M_{33}^-\)</option>
-                            <option value="11">\(M_{33}^+\)</option>
                         </select>
                     </div>
                     <label for="edVal2" class="control-label col-auto">=</label>
@@ -590,6 +560,7 @@
     });
     MathJax.Hub.Register.StartupHook("End", function () {
         $(".math").removeClass("math");
+        console.log("MathJax startup takes " + (performance.now() - timeStartup).toFixed(3));
     });
     MathJax.Hub.Register.MessageHook("New Math", function () {
         $(".math").removeClass("math");
@@ -605,20 +576,25 @@
         location.href = "Step1.html";
 
     $("#title")[0].innerHTML += '<small>' + typeArr[type] + '</small>';
-    $("#slType").selectpicker('val', type);
     $("#dataTables").find("table")[type].style.display = "";
 
-    let $selectP1 = $("#slP1"), $selectP2 = $("#slP2");
+    let $selectP1 = $("#slP1"), $selectP2 = $("#slP2"), $selectType = $("#slType");
     let $selectP1P2 = $("#slP1, #slP2");
-    if (type >= 3) {
-        let threshold = (type === 3 ? 8 : 2);
-        $selectP1P2.find("option").each(function () {
-            let $this = $(this), value = parseInt($this.val());
-            if (value >= threshold)
-                $this.remove();
-        });
+
+    // generate options
+
+    for (let i = 0; i < p1Arr.length; i++) {
+        if (type >= 3) {
+            let threshold = (type === 3 ? 8 : 2);
+            if (i >= threshold) break;
+        }
+        $selectP1P2.append(`<option value="${i}">${p1Arr[i]}</option>`);
     }
-    $selectP1P2.selectpicker('refresh');
+    for (let i = 0; i < typeArr.length; i++)
+        $selectType.append(`<option value="${i}">${typeArr[i]}</option>`);
+
+    $selectType.selectpicker('val', type);
+    $(".selectpicker").selectpicker('refresh');
 
     $("select").on("loaded.bs.select", clearTitle);
     $selectP1.on('changed.bs.select', function (e, index) {

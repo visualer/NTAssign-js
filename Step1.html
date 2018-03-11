@@ -58,12 +58,6 @@
                 </label>
                 <div class="col-lg-3 col-md-3_5 col-sm-4 col-xs-6 col-xs-offset-0_5">
                     <select class="form-control selectpicker" id="slType" name="Type">
-                        <option selected="selected" value="0">Air-suspended SWNTs</option>
-                        <option value="1">SWNTs on \(\mathrm{SiO_2}/\mathrm{Si}\) substrates</option>
-                        <option value="2">SWNT arrays on quartz substrates</option>
-                        <option value="3">&quot;Super-growth&quot; SWNTs</option>
-                        <option value="4">SDS-dispersed SWNTs</option>
-                        <option value="5">ssDNA-dispersed SWNTs</option>
                     </select>
                 </div>
                 <div class="col-lg-1 col-md-1_5 col-sm-2 col-xs-2 col-xs-offset-0_5">
@@ -74,7 +68,7 @@
                      style="height: 200px; overflow-y: auto;">
                     <h4>Update Log</h4>
                     <p>
-                        <b>v2.0.0 &mdash; 2018/3/9</b><br />
+                        <b>v2.0.0 &mdash; 2018/3/12</b><br />
                         - Fully restructured. Fix minor bugs.
                     </p>
                     <p>
@@ -133,6 +127,7 @@
     });
     MathJax.Hub.Register.StartupHook("End", function () {
         $(".math").removeClass("math");
+        console.log("MathJax startup takes " + (performance.now() - timeStartup).toFixed(3));
     });
     MathJax.Hub.Register.MessageHook("New Math", function () {
         $(".math").removeClass("math");
@@ -142,7 +137,14 @@
 <!-- script -->
 <script>
 
-    $("#slType")
+    // generate options
+
+    let $selectType = $("#slType");
+    for (let i = 0; i < typeArr.length; i++)
+        $selectType.append(`<option value="${i}">${typeArr[i]}</option>`);
+
+    $selectType.selectpicker('val', 0)
+        .selectpicker('refresh')
         .on("loaded.bs.select", clearTitle)
         .on('changed.bs.select', clearTitle);
 

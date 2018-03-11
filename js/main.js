@@ -1,11 +1,15 @@
 ﻿
 'use strict';
 
+let timeLoad = performance.now(); // before load
+let timeStartup;
+
 $.getScript(navigator.language.substr(0, 2).toLowerCase() !== "zh"
     ? "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js"
     : "https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js"
     + "?config=TeX-AMS_SVG-full,Safe&locale=en", function () {
-    console.log("MathJax loaded");
+    timeStartup = performance.now();
+    console.log("MathJax load takes " + (timeStartup - timeLoad).toFixed(2));
 });
 
 let urlParams;
@@ -20,6 +24,10 @@ let urlParams;
     while (match = search.exec(query))
         urlParams[decode(match[1])] = decode(match[2]);
 })();
+
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+    $('.selectpicker').selectpicker('mobile');
+}
 
 
 
