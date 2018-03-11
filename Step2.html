@@ -31,28 +31,6 @@
 
     <!-- start content -->
 
-    <div id="es6Dimmer" class="modal fade" role="dialog" style="top: 30%;" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <h3 style="text-align: center;">
-                        Your browser doesn't support ECMAScript 6 (ES2015), and the program can't work properly.
-                        <br /><br /> IE-based browsers are deprecated now.
-                        Using Edge, Chrome, Firefox will be better.
-                    </h3>
-                </div>
-                <div class="modal-footer">
-                    <a type="button" href="https://www.google.com/chrome/" class="btn btn-primary" >
-                        Download Chrome
-                    </a>
-                    <a type="button" href="https://www.firefox.com.cn/" class="btn btn-primary" >
-                        Download Firefox
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <h1 id="title" class="math">
         Step 2
     </h1>
@@ -595,14 +573,11 @@
     </footer>
 </div>
 
-<script>
-    $.getScript(navigator.language.substr(0, 2).toLowerCase() !== "zh"
-        ? "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js"
-        : "https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js"
-        + "?config=TeX-AMS_SVG-full,Safe&locale=en"
-    );
-</script>
-
+<script src="js/es6.js"></script>
+<script src="js/main.js"></script>
+<script src="js/Energy.js"></script>
+<script src="js/Assign.js"></script>
+<script src="js/Plot.js"></script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         showProcessingMessages: false,
@@ -620,11 +595,6 @@
         $(".math").removeClass("math");
     });
 </script>
-
-<script src="js/Energy.js"></script>
-<script src="js/Assign.js"></script>
-<script src="js/main.js"></script>
-<script src="js/Plot.js"></script>
 
 <!-- script -->
 

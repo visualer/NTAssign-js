@@ -1,6 +1,13 @@
 ﻿
 'use strict';
 
+$.getScript(navigator.language.substr(0, 2).toLowerCase() !== "zh"
+    ? "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js"
+    : "https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js"
+    + "?config=TeX-AMS_SVG-full,Safe&locale=en", function () {
+    console.log("MathJax loaded");
+});
+
 let urlParams;
 (window.onpopstate = function () {
     let match,
@@ -14,8 +21,9 @@ let urlParams;
         urlParams[decode(match[1])] = decode(match[2]);
 })();
 
-if (!Supports.arrow || !Supports.templateString || !Supports.letConst)
-    $(".modal").modal({ backdrop: "static" });
+
+
+
 
 
 function clearTitle() { // used in Step1 and Step2
