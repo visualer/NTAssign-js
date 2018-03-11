@@ -1,4 +1,4 @@
-# Chirality Assignment Program of SWCNT [![CodeFactor](https://www.codefactor.io/repository/github/visualer/ntassign-js/badge)](https://www.codefactor.io/repository/github/visualer/ntassign-js)
+# Chirality Assignment Program of SWCNT [![CodeFactor](https://www.codefactor.io/repository/github/visualer/ntassign.js/badge)](https://www.codefactor.io/repository/github/visualer/ntassign.js)
 
 ## Overview
 
@@ -18,7 +18,7 @@ View the paper and site above (with tutorial videos) for details.
 
 ## Claim
 
-**We noticed there are several clones/downloads of this project source code.** We would like to re-state that, 
+**We noticed there are several clones/downloads of this project source code.** We would like to re-state that,
 
 > The Nanomaterials & Nanostructures Group, Peking University **disclaims any warranty or liability of the version built offline/modified**, especially when the copy is not in update with the latest version on the website listed above, as described in LICENSE.
 
