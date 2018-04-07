@@ -20,10 +20,11 @@
   <script src="js/lib/flot/jquery.flot.fillbetween.min.js"></script>
   <script src="js/lib/flot/jquery.flot.symbol.min.js"></script>
   <script src="js/lib/linq.min.js"></script>
+  <script src="js/lib/js.cookie-2.2.0.min.js"></script>
   <script src="js/lib/es-checker.js"></script>
 
 </head>
-<body>
+<body class="Step1">
 <div class="container body-content">
   <a href="http://old.chem.pku.edu.cn/liy/labhomepage" target="_blank">
     <img src="img/banner_waifu2x.png" style="width: 75%;" class="center-block" />
@@ -68,12 +69,8 @@
              style="height: 200px; overflow-y: auto;">
           <h4>Update Log</h4>
           <p>
-            <b>v2.1.0 &mdash; 2018/4/6</b><br />
-            - Adjusted some parameters.
-          </p>
-          <p>
-            <b>v2.0.0 &mdash; 2018/3/12</b><br />
-            - Fully restructured. Fix minor bugs.
+            <b>v2.0.0 &mdash; 2018/4/7</b><br />
+            - Full restructured. Added mini-graph for (n,m) calculator. Adjusted parameters for air-suspended related type.
           </p>
           <p>
             <b>v1.1.1 &mdash; 2018/1/19</b><br />
@@ -115,10 +112,6 @@
 </div>
 
 <script src="js/es6.js"></script>
-<script src="js/main.js"></script>
-<script src="js/Energy.js"></script>
-<script src="js/Assign.js"></script>
-<script src="js/Plot.js"></script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         showProcessingMessages: false,
@@ -138,21 +131,6 @@
     });
 </script>
 
-<!-- script -->
-<script>
-
-  // generate options
-
-  let $selectType = $("#slType");
-  for (let i = 0; i < typeArr.length; i++)
-    $selectType.append(`<option value="${i}">${typeArr[i]}</option>`);
-
-  $selectType.selectpicker('val', 0)
-    .selectpicker('refresh')
-    .on("loaded.bs.select", clearTitle)
-    .on('changed.bs.select', clearTitle);
-
-</script>
 
 <!-- Global Site Tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107272975-1"></script>

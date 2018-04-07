@@ -20,10 +20,11 @@
   <script src="js/lib/flot/jquery.flot.fillbetween.min.js"></script>
   <script src="js/lib/flot/jquery.flot.symbol.min.js"></script>
   <script src="js/lib/linq.min.js"></script>
+  <script src="js/lib/js.cookie-2.2.0.min.js"></script>
   <script src="js/lib/es-checker.js"></script>
 
 </head>
-<body>
+<body class="Step2">
 <div class="container body-content">
   <a href="http://old.chem.pku.edu.cn/liy/labhomepage" target="_blank">
     <img src="img/banner_waifu2x.png" style="width: 75%;" class="center-block" />
@@ -626,10 +627,6 @@
 </div>
 
 <script src="js/es6.js"></script>
-<script src="js/main.js"></script>
-<script src="js/Energy.js"></script>
-<script src="js/Assign.js"></script>
-<script src="js/Plot.js"></script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         showProcessingMessages: false,
@@ -647,47 +644,6 @@
     MathJax.Hub.Register.MessageHook("New Math", function () {
         $(".math").removeClass("math");
     });
-</script>
-
-<!-- script -->
-
-<script>
-
-  let type = parseInt(urlParams['Type']);
-  if (isNaN(type) || type > 5 || type < 0)
-    location.href = "Step1.html";
-
-  $("#title")[0].innerHTML += '<small>' + typeArr[type] + '</small>';
-  $("#dataTables").find("table")[type].style.display = "";
-
-  let $selectP1 = $("#slP1"), $selectP2 = $("#slP2"), $selectType = $("#slType");
-  let $selectP1P2 = $("#slP1, #slP2");
-
-  // generate options
-
-  for (let i = 0; i < p1Arr.length; i++) {
-    if (type >= 3) {
-      let threshold = (type === 3 ? 8 : 2);
-      if (i >= threshold) break;
-    }
-    $selectP1P2.append(`<option value="${i}">${p1Arr[i]}</option>`);
-  }
-  for (let i = 0; i < typeArr.length; i++)
-    $selectType.append(`<option value="${i}">${typeArr[i]}</option>`);
-
-  $selectType.selectpicker('val', type);
-  $(".selectpicker").selectpicker('refresh');
-
-  $("select").on("loaded.bs.select", clearTitle);
-  $selectP1.on('changed.bs.select', function (e, index) {
-    let i = index - 1;
-    clearTitle(); // only when slP1 changes the title have to be cleared; only active select
-    $selectP2.find("option").each(function () {
-      let value = parseInt($(this).val());
-      if (i % 2 === 0 && value === i + 1 || i % 2 === 1 && value === i - 1)
-        $selectP2.selectpicker('val', value);
-    });
-  });
 </script>
 
 <!-- Global Site Tag (gtag.js) - Google Analytics -->

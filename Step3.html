@@ -20,10 +20,11 @@
   <script src="js/lib/flot/jquery.flot.fillbetween.min.js"></script>
   <script src="js/lib/flot/jquery.flot.symbol.min.js"></script>
   <script src="js/lib/linq.min.js"></script>
+  <script src="js/lib/js.cookie-2.2.0.min.js"></script>
   <script src="js/lib/es-checker.js"></script>
 
 </head>
-<body>
+<body class="Step3">
 <div class="container body-content">
   <a href="http://old.chem.pku.edu.cn/liy/labhomepage" target="_blank">
     <img src="img/banner_waifu2x.png" style="width: 75%;" class="center-block" />
@@ -120,10 +121,6 @@
 </div>
 
 <script src="js/es6.js"></script>
-<script src="js/main.js"></script>
-<script src="js/Energy.js"></script>
-<script src="js/Assign.js"></script>
-<script src="js/Plot.js"></script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         showProcessingMessages: false,
@@ -143,55 +140,6 @@
     });
 </script>
 
-<!-- script -->
-<script>
-
-  // check integrity
-  for (let i of ['Type', 'P1', 'P2', 'Val1', 'Val2', 'RBM']) {
-    if (urlParams[i] === undefined) {
-      location.href = 'Step1.html';
-      break;
-    }
-  }
-
-  let params = {
-    type: parseInt(urlParams['Type']), // int
-    p1: parseInt(urlParams['P1']), // int
-    p2: parseInt(urlParams['P2']), // int
-    val1: urlParams['Val1'], // empty-able str
-    val2: urlParams['Val2'], // empty-able str
-    rbm: urlParams['RBM'] // empty-able str
-  };
-
-  let valueBetween = (xy, a, b) => (xy >= a || xy <= b);
-  let val1_ = parseFloat(params.val1), val2_ = parseFloat(params.val2), rbm_ = parseFloat(params.rbm);
-  let emptyNum = Number(isNaN(val1_)) + Number(isNaN(val2_)) + Number(isNaN(rbm_));
-  if (emptyNum >= 2 || isNaN(params.type) || isNaN(params.p1) || isNaN(params.p2) ||
-    !isNaN(val1_) && (val1_ < 0 || val1_ > 4) || !isNaN(val2_) && (val2_ < 0 || val2_ > 4) ||
-    !isNaN(rbm_) && (rbm_ < 30 || rbm_ > 500) || !valueBetween(params.type, 0, 5) ||
-    !valueBetween(params.p1, 0, 11) || !valueBetween(params.p2, 0, 11)
-  )
-    location.href = 'Step1.html';
-
-  // end validation
-
-  $("#title")[0].innerHTML += '<small>' + typeArr[params.type] + '</small>';
-
-  let plotParams = processOutput(getPlotParams(params));
-
-  $("#resultDiv")
-    .addClass(plotParams.ar !== AssignResult.error ? "alert-success" : "alert-danger")
-    .html(plotParams.resultString);
-  $("#yAxisLabel").html(plotParams.yAxisLabel);
-  $("#xAxisLabel").html(plotParams.xAxisLabel);
-  $("#" + plotParams.pointType + "Legend").css("display", "");
-  if (plotParams.bluePoint !== null)
-    $("#blueLegend").css("display", "");
-
-  $(drawPlot("plot-placeholder", plotParams));
-
-
-</script>
 <!-- Global Site Tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107272975-1"></script>
 <script>
