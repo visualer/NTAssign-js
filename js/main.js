@@ -38,14 +38,16 @@ if (!es6SupportFlag && Cookies.get("dimmer") !== "shown") {
     <h3 style="text-align: center;">
     Your browser doesn't support ECMAScript 6 (ES2015), the program will work a bit slower.
     <br /><br /> IE is no longer updated by Microsoft now. 
-    Using Edge, Chrome or Firefox will be better.</h3></div><div class="modal-footer">
+    Using Edge, Chrome or Firefox will be better.<br /><br />This dialog will be
+    shown only once.</h3></div><div class="modal-footer">
     <a type="button" href="https://www.google.com/chrome/" class="btn btn-primary">Download Chrome</a>
     <a type="button" href="https://www.firefox.com.cn/" class="btn btn-primary">Download Firefox</a>
     <a type="button" class="btn btn-default" data-dismiss="modal">Close</a>
     </div></div></div></div>
   `);
-  $es6Dimmer.appendTo("body").modal({backdrop: "static"});
-  Cookies.set("dimmer", "shown");
+
+  $es6Dimmer.appendTo("body").modal({ backdrop: "static" });
+  Cookies.set("dimmer", "shown", { expires: 100 * 365 });
 }
 
 if ($body.hasClass("Step1")) {
