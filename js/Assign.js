@@ -75,7 +75,7 @@ function E1R1(params) {
     let x = (val + valAnother) / 2, y = valAnother - val;
     return Assign({
         bluePoint: null,
-        point: [ x, y ],
+        point: [x, y],
         pLesser: p,
         type: type,
         pointType: "green",

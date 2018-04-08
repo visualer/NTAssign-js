@@ -35,16 +35,16 @@ var api = {
   ObjectStatics: { is: "'use strict'; return ('getOwnPropertySymbols' in Object) && ('assign' in Object) && ('is' in Object);" },
   ArrayStatics: { is: "'use strict'; return ('from' in Array) && ('of' in Array);" },
   ArrayMethods: { is: "'use strict'; return ('fill' in Array.prototype) && ('find' in Array.prototype) && ('findIndex' in Array.prototype) && ('entries' in Array.prototype) && ('keys' in Array.prototype) && ('values' in Array.prototype);" },
-  TypedArrays: { is: "'use strict'; return ('ArrayBuffer' in global) && ('Int8Array' in global) && ('Uint8Array' in global) && ('Int32Array' in global) && ('Float64Array' in global);" },
+  TypedArrays: { is: "'use strict'; return ('ArrayBuffer' in window) && ('Int8Array' in window) && ('Uint8Array' in window) && ('Int32Array' in window) && ('Float64Array' in window);" },
   TypedArrayStatics: { dependencies: ["TypedArrays"], is: "'use strict'; return ('from' in Uint32Array) && ('of' in Uint32Array);" },
   TypedArrayMethods: { dependencies: ["TypedArrays"], is: "'use strict'; var x = new Int8Array(1); return ('slice' in x) && ('join' in x) && ('map' in x) && ('forEach' in x);" },
   StringMethods: { is: "'use strict'; return ('includes' in String.prototype) && ('repeat' in String.prototype);" },
   NumberStatics: { is: "'use strict'; return ('isNaN' in Number) && ('isInteger' in Number);" },
   MathStatics: { is: "'use strict'; return ('hypot' in Math) && ('acosh' in Math) && ('imul' in Math);" },
-  collections: { is: "'use strict'; return ('Map' in global) && ('Set' in global) && ('WeakMap' in global) && ('WeakSet' in global);" },
-  Proxy: { is: "'use strict'; return ('Proxy' in global);" },
-  Promise: { is: "'use strict'; return ('Promise' in global);"},
-  Reflect: { is: "'use strict'; return ('Reflect' in global);" },
+  collections: { is: "'use strict'; return ('Map' in window) && ('Set' in window) && ('WeakMap' in window) && ('WeakSet' in window);" },
+  Proxy: { is: "'use strict'; return ('Proxy' in window);" },
+  Promise: { is: "'use strict'; return ('Promise' in window);"},
+  Reflect: { is: "'use strict'; return ('Reflect' in window);" },
 };
 
 module.exports = api;
@@ -177,7 +177,6 @@ var supports = require('../../lib/interface');
 var api = require('../../lib/api');
 var runTest = require('../../lib/runtest');
 
-global = window;
 for (var key in supports){
   supports[key] = runTest(supports[key]);
 }
