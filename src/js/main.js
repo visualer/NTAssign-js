@@ -31,6 +31,11 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
 
 let $body = $("body");
 
+
+/*
+ * Step 1
+ */
+
 if ($body.hasClass("Step1")) {
 
   let $selectType = $("#slType");
@@ -42,14 +47,21 @@ if ($body.hasClass("Step1")) {
     .on("loaded.bs.select", clearTitle)
     .on('changed.bs.select', clearTitle);
 
-} else if ($body.hasClass("Step2")) {
+}
+
+/*
+ * Step 2
+ */
+
+if ($body.hasClass("Step2")) {
 
   let type = parseInt(urlParams['Type']);
   if (isNaN(type) || type > 5 || type < 0)
     location.href = "Step1.html";
 
   $("#title")[0].innerHTML += '<small>' + typeArr[type] + '</small>';
-  $("#dataTables").find("table")[type].style.display = "";
+
+  $("#dataTables").find(`.type${type}`).removeClass('hidden');
 
   let $selectP1 = $("#slP1"), $selectP2 = $("#slP2"), $selectType = $("#slType");
   let $selectP1P2 = $("#slP1, #slP2");
@@ -80,7 +92,14 @@ if ($body.hasClass("Step1")) {
     });
   });
 
-} else if ($body.hasClass("Step3")) {
+}
+
+
+/*
+ * Step 3
+ */
+
+if ($body.hasClass("Step3")) {
 
   // check integrity
   for (let i of ['Type', 'P1', 'P2', 'Val1', 'Val2', 'RBM']) {
