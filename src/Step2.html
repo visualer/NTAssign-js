@@ -7,21 +7,19 @@
   <meta http-equiv="X-UA-compatible" content="IE=edge, chrome=1">
   <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
   <title>Step 2</title>
-  <link href="css/bootstrap.min.css" rel="stylesheet" />
-  <link href="css/bootstrap-select.min.css" rel="stylesheet" />
+  <link href="lib/bootstrap.min.css" rel="stylesheet" />
+  <link href="lib/bootstrap-select.min.css" rel="stylesheet" />
   <link href="css/site.css" rel="stylesheet" />
 
-  <script src="js/lib/jquery-3.3.1.min.js"></script>
-  <script src="js/lib/bootstrap.min.js"></script>
-  <script src="js/lib/bootstrap-select.min.js"></script>
-  <script src="js/lib/modernizr-2.8.3.js"></script>
-  <script src="js/lib/respond.min.js"></script>
-  <script src="js/lib/flot/jquery.flot.min.js"></script>
-  <script src="js/lib/flot/jquery.flot.fillbetween.min.js"></script>
-  <script src="js/lib/flot/jquery.flot.symbol.min.js"></script>
-  <script src="js/lib/linq.min.js"></script>
-  <script src="js/lib/js.cookie-2.2.0.min.js"></script>
-  <script src="js/lib/es-checker.js"></script>
+  <script src="lib/jquery-3.3.1.min.js"></script>
+  <script src="lib/bootstrap.min.js"></script>
+  <script src="lib/bootstrap-select.min.js"></script>
+  <script src="lib/modernizr-2.8.3.js"></script>
+  <script src="lib/respond.min.js"></script>
+  <script src="lib/flot/jquery.flot.min.js"></script>
+  <script src="lib/flot/jquery.flot.fillbetween.min.js"></script>
+  <script src="lib/flot/jquery.flot.symbol.min.js"></script>
+  <script src="lib/linq.min.js"></script>
 
 </head>
 <body class="Step2">
@@ -626,7 +624,13 @@
   </footer>
 </div>
 
-<script src="js/es6.js"></script>
+<!-- build:js js/app.min.js -->
+<script src="js/Energy.js"></script>
+<script src="js/Assign.js"></script>
+<script src="js/Plot.js"></script>
+<script src="js/main.js"></script>
+<!-- endbuild -->
+
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         showProcessingMessages: false,
