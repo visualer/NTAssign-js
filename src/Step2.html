@@ -38,9 +38,8 @@
     <div class="form-horizontal math col-md-6">
       <form action="Step3.html" method="get" name="formInput" onsubmit="return validate(this);">
         <div class="row">
-          <p id="hint" style="font-size: 16px; padding: 8px; border-radius: 4px;"
-             class="col-lg-9 col-md-11 col-sm-8 col-xs-9
-                       col-lg-offset-1 col-md-offset-0_5 col-sm-offset-1 col-xs-offset-1">
+          <p id="hint" class="col-lg-9 col-md-11 col-sm-8 col-xs-9 col-lg-offset-1
+                              col-md-offset-0_5 col-sm-offset-1 col-xs-offset-1 hint">
             Please input at least 2 values.<br />
             Only paired transition energies are allowed to input in the current version.
           </p>
@@ -130,8 +129,11 @@
           <input type="submit" value="Calculate" class="btn btn-primary"
                  style="margin-left: 6%;" onclick="calculate($('#calculatorForm')[0]);" />
         </div>
+        <div id="calculatorHint" class="col-lg-8 col-md-7 col-sm-7 col-xs-8 col-lg-offset-1
+                                        col-md-offset-0_5 col-sm-offset-1 col-xs-offset-1">
+        </div>
       </form>
-      <div class="col-md-10 col-sm-8 col-xs-8" id="calcResult">
+      <div class="col-md-10 col-sm-8 col-xs-8" id="calcResult" style="margin-bottom: 30px;">
       </div>
     </div>
 
@@ -460,30 +462,6 @@
           </td>
         </tr>
       </table>
-    </div>
-  </div>
-
-  <div id="containerTemplate" class="math" oncontextmenu="return false"
-       onmousedown="return false" style="display: none;">
-    <div class="row">
-      <div class="col-lg-offset-2 col-md-offset-6 rbmAxisLabel"
-           style="text-align: center; font-size: 18px; color: #0000FF;">
-      </div>
-    </div>
-    <br />
-    <div class="row" style="position: relative;">
-      <div>
-        <div style="position: absolute; top: 70%; left: 2%; font-size: 18px; transform: rotate(-90deg);
-                        transform-origin: top left;" class="yAxisLabel">
-        </div>
-      </div>
-      <div id="plotPlaceholder" style="width: 400px; height: 290px; font-family: serif;"
-           class="col-md-offset-1 col-xs-offset-1"></div>
-    </div>
-    <div class="row">
-      <div class="col-lg-offset-2 col-md-offset-5 xAxisLabel"
-           style="text-align: center; font-size: 18px; color: #FF0000;">
-      </div>
     </div>
   </div>
 
