@@ -178,8 +178,8 @@ function getCos3Theta(val, dt, p, type) {
 
     } else throw new Error('invalid type');
 
-    r[0] = r[0].toFixed(4); // 4 digits
-    r[1] = r[0].toFixed(4);
+    r[0] = parseFloat(r[0].toFixed(4)); // 4 digits
+    r[1] = parseFloat(r[1].toFixed(4));
     if (r[0] > 1 || r[0] < 0)
         r[0] = -1;
     if (r[1] > 1 || r[1] < 0)
