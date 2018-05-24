@@ -52,19 +52,18 @@ if ($body.hasClass("Step1")) {
  * Step 2
  */
 
-if ($body.hasClass("Step2")) {
+if ($body.hasClass('Step2')) {
 
-  let type = parseInt(urlParams['Type']);
-  // '', ' ' will be converted to NaN in this process.
+  let type = parseInt(urlParams['Type']); // '', ' ' will be converted to NaN in this process.
   if (isNaN(type) || type > 5 || type < 0)
-    location.href = "Step1.html";
+    location.href = 'Step1.html';
 
-  $("#title")[0].innerHTML += '<small>' + typeArr[type] + '</small>';
+  let $selectP1 = $('#slP1'), $selectP2 = $('#slP2'), $selectType = $('#slType');
+  let $selectP1P2 = $('#slP1, #slP2');
 
-  $("#dataTables").find(`.type${type}`).removeClass('hidden');
+  $('#title')[0].innerHTML += ' <small>' + typeArr[type] + '</small>';
 
-  let $selectP1 = $("#slP1"), $selectP2 = $("#slP2"), $selectType = $("#slType");
-  let $selectP1P2 = $("#slP1, #slP2");
+  $('#dataTables').find(`.type${type}`).removeClass('hidden');
 
   // generate options
 
@@ -78,14 +77,49 @@ if ($body.hasClass("Step2")) {
   for (let i = 0; i < typeArr.length; i++)
     $selectType.append(`<option value="${i}">${typeArr[i]}</option>`);
 
-  $selectType.selectpicker('val', type);
-  $(".selectpicker").selectpicker('refresh');
+  // start recovering
 
-  $("select").on("loaded.bs.select", clearTitle);
+  if ((['P1', 'P2', 'Val1', 'Val2', 'RBM'].every((e) => urlParams[e] !== undefined ))) {
+
+    let params = {
+      p1: parseInt(urlParams['P1']), // int
+      p2: parseInt(urlParams['P2']), // int
+      val1: urlParams['Val1'], // empty-able str
+      val2: urlParams['Val2'], // empty-able str
+      rbm: urlParams['RBM'] // empty-able str
+    };
+
+    let valueBetween = (xy, a, b) => (xy >= a && xy <= b);
+    let val1_ = parseFloat(params.val1), val2_ = parseFloat(params.val2), rbm_ = parseFloat(params.rbm);
+
+    let emptyNum = Number(isNaN(val1_)) + Number(isNaN(val2_)) + Number(isNaN(rbm_));
+    if (emptyNum >= 2 || isNaN(params.p1) || isNaN(params.p2) ||
+      !isNaN(val1_) && !valueBetween(val1_, 0, 4) || !isNaN(val2_) && !valueBetween(val2_, 0, 4) ||
+      !isNaN(rbm_) && !valueBetween(rbm_, 30, 500) ||
+      !valueBetween(params.p1, 0, 11) || !valueBetween(params.p2, 0, 11)
+    )
+      location.href = 'Step1.html';
+
+    $selectP1.selectpicker('val', params.p1);
+    $selectP2.selectpicker('val', params.p2);
+    $('#edVal1').val(params.val1);
+    $('#edVal2').val(params.val2);
+    $('#edRBM').val(params.rbm);
+
+
+  } else if ((['P1', 'P2', 'Val1', 'Val2', 'RBM'].every((e) => urlParams[e] !== undefined )))
+    location.href = 'Step1.html';
+
+  // end validation and recovering
+
+  $selectType.selectpicker('val', type);
+  $('.selectpicker').selectpicker('refresh');
+
+  $('select').on('loaded.bs.select', clearTitle);
   $selectP1.on('changed.bs.select', function (e, index) {
     let i = index - 1;
     clearTitle(); // only when slP1 changes the title have to be cleared; only active select
-    $selectP2.find("option").each(function () {
+    $selectP2.find('option').each(function () {
       let value = parseInt($(this).val());
       if (i % 2 === 0 && value === i + 1 || i % 2 === 1 && value === i - 1)
         $selectP2.selectpicker('val', value);
@@ -99,15 +133,11 @@ if ($body.hasClass("Step2")) {
  * Step 3
  */
 
-if ($body.hasClass("Step3")) {
+if ($body.hasClass('Step3')) {
 
   // check integrity
-  for (let i of ['Type', 'P1', 'P2', 'Val1', 'Val2', 'RBM']) {
-    if (urlParams[i] === undefined) {
-      location.href = 'Step1.html';
-      break;
-    }
-  }
+  if (!(['Type', 'P1', 'P2', 'Val1', 'Val2', 'RBM'].every((e) => urlParams[e] !== undefined )))
+    location.href = 'Step1.html';
 
   let params = {
     type: parseInt(urlParams['Type']), // int
@@ -118,33 +148,33 @@ if ($body.hasClass("Step3")) {
     rbm: urlParams['RBM'] // empty-able str
   };
 
-  let valueBetween = (xy, a, b) => (xy >= a || xy <= b);
+  let valueBetween = (xy, a, b) => (xy >= a && xy <= b);
   let val1_ = parseFloat(params.val1), val2_ = parseFloat(params.val2), rbm_ = parseFloat(params.rbm);
   // also, '' and ' ' will be converted to NaN in this process.
+
   let emptyNum = Number(isNaN(val1_)) + Number(isNaN(val2_)) + Number(isNaN(rbm_));
   if (emptyNum >= 2 || isNaN(params.type) || isNaN(params.p1) || isNaN(params.p2) ||
-    !isNaN(val1_) && (val1_ < 0 || val1_ > 4) || !isNaN(val2_) && (val2_ < 0 || val2_ > 4) ||
-    !isNaN(rbm_) && (rbm_ < 30 || rbm_ > 500) || !valueBetween(params.type, 0, 5) ||
+    !isNaN(val1_) && !valueBetween(val1_, 0, 4) || !isNaN(val2_) && !valueBetween(val2_, 0, 4) ||
+    !isNaN(rbm_) && !valueBetween(rbm_, 30, 500) || !valueBetween(params.type, 0, 5) ||
     !valueBetween(params.p1, 0, 11) || !valueBetween(params.p2, 0, 11)
   )
     location.href = 'Step1.html';
 
-  // end validation
 
-  $("#title")[0].innerHTML += '<small>' + typeArr[params.type] + '</small>';
+  $('#title')[0].innerHTML += ' <small>' + typeArr[params.type] + '</small>';
 
   let plotParams = processOutput(getPlotParams(params));
 
-  $("#resultDiv")
-    .addClass(plotParams.ar !== AssignResult.error ? "alert-success" : "alert-danger")
+  $('#resultDiv')
+    .addClass(plotParams.ar !== AssignResult.error ? 'alert-success' : 'alert-danger')
     .html(plotParams.resultString);
-  $("#yAxisLabel").html(plotParams.yAxisLabel);
-  $("#xAxisLabel").html(plotParams.xAxisLabel);
-  $("#" + plotParams.pointType + "Legend").css("display", "");
+  $('#yAxisLabel').html(plotParams.yAxisLabel);
+  $('#xAxisLabel').html(plotParams.xAxisLabel);
+  $('#' + plotParams.pointType + 'Legend').css('display', '');
   if (plotParams.bluePoint !== null)
-    $("#blueLegend").css("display", "");
+    $('#blueLegend').css('display', '');
 
-  $(drawPlot("plot-placeholder", plotParams));
+  $(drawPlot('plot-placeholder', plotParams));
 
 }
 
@@ -152,14 +182,14 @@ if ($body.hasClass("Step3")) {
 
 function clearTitle() { // used in Step1 and Step2
 
-  $(".bootstrap-select").find("button").removeAttr("title");
+  $('.bootstrap-select').find('button').removeAttr('title');
 }
 
 function validate(form) { // used in Step2
 
-  let $hint = $("#hint");
+  let $hint = $('#hint');
   let invokeError = (msg) => {
-    $hint.addClass("alert-danger")
+    $hint.addClass('alert-danger')
       .html(`<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> ${msg}`);
     return false;
   };
@@ -167,22 +197,24 @@ function validate(form) { // used in Step2
   let val2_ = parseFloat(form.Val2.value);
   let rbm_ = parseInt(form.RBM.value);
   let emptyNum = Number(isNaN(val1_)) + Number(isNaN(val2_)) + Number(isNaN(rbm_));
-  if (emptyNum >= 2) return invokeError("At least 2 values are required.");
+  if (emptyNum >= 2) return invokeError('At least 2 values are required.');
   else {
     if (!isNaN(val1_) && (val1_ < 0 || val1_ > 4) ||
       !isNaN(val2_) && (val2_ < 0 || val2_ > 4) ||
       !isNaN(rbm_) && (rbm_ < 30 || rbm_ > 500))
-      return invokeError("Please input valid value.");
-    if ($("#slP1").selectpicker("val") === "")
-      return invokeError("Please select the type of transition energy.");
+      return invokeError('Please input valid value.');
+    if ($("#slP1").selectpicker('val') === '')
+      return invokeError('Please select the type of transition energy.');
 
-    $(".selectpicker").removeAttr("disabled");
+    $(".selectpicker").removeAttr('disabled');
+
+    history.replaceState(null, null,
+      'Step2.html?' + ['Type', 'P1', 'Val1', 'P2', 'Val2', 'RBM'].map((e) => e + '=' + form[e].value).join('&'));
     return true;
   }
 }
 
 function changeEdit(p1_lesser, val1, val2) { // used in Step2
-
   $("#slP1").selectpicker('val', p1_lesser);
   $("#slP2").selectpicker('val', p1_lesser + 1);
   $("#edVal1").val(val1);
