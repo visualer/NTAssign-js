@@ -1,29 +1,30 @@
 
 'use strict';
 
-let isNumber = e => isNaN(parseFloat(e));
-function getPlotParams(params) {
+let isUnparsable = e => isNaN(parseFloat(e));
+
+function getPlotParams(inputParams) {
   let decimalDigits = (d) => d.split('.')[1].length;
 
-  if (isNumber(params.val1) && isNumber(params.val2)) {
+  if (isUnparsable(inputParams.val1) && isUnparsable(inputParams.val2)) {
     throw new Error('Unauthorized Access');
-  } else if (isNumber(params.val1) || isNumber(params.val2)) {
-    if (isNumber(params.rbm)) throw new Error('Unauthorized Access');
-    params.uncertainty = 2.0 / Math.pow(10, decimalDigits(isNumber(params.val1) ? params.val2 : params.val1 ));
-    return E1R1(params);
+  } else if (isUnparsable(inputParams.val1) || isUnparsable(inputParams.val2)) {
+    if (isUnparsable(inputParams.rbm)) throw new Error('Unauthorized Access');
+    inputParams.uncertainty = 2.0 / Math.pow(10, decimalDigits(isUnparsable(inputParams.val1) ? inputParams.val2 : inputParams.val1 ));
+    return E1R1(inputParams);
   } else {
-    params.uncertainty = 2.0 / Math.pow(10,
-      Math.min(decimalDigits(params.val1), decimalDigits(params.val2))
+    inputParams.uncertainty = 2.0 / Math.pow(10,
+      Math.min(decimalDigits(inputParams.val1), decimalDigits(inputParams.val2))
     );
-    return E2(params);
+    return E2(inputParams);
   }
 }
 
-function E1R1(params) {
+function E1R1(inputParams) {
 
-  let p1 = (isNumber(params.val1) ? params.p2 : params.p1), type = params.type, p = p1ToP[p1]; // int
-  let val = parseFloat(isNumber(params.val1) ? params.val2 : params.val1); // float
-  let wRBM = parseFloat(params.rbm); // float, integrity checked in getPlotParam
+  let p1 = (isUnparsable(inputParams.val1) ? inputParams.p2 : inputParams.p1), type = inputParams.type, p = p1ToP[p1]; // int
+  let val = parseFloat(isUnparsable(inputParams.val1) ? inputParams.val2 : inputParams.val1); // float
+  let wRBM = parseFloat(inputParams.rbm); // float, integrity checked in getPlotParam
 
   let dt = wRBM2Dt(wRBM, p, type);
   let cos = getCos3Theta(val, dt, p, type);
@@ -86,13 +87,13 @@ function E1R1(params) {
 }
 
 
-function E2(params) {
+function E2(inputParams) {
 
   let resultString = '';
-  let p1 = params.p1, p2 = params.p2, type = params.type; // int
-  let val1 = parseFloat(params.val1), val2 = parseFloat(params.val2); // float, integrity checked in getPlotParams
+  let p1 = inputParams.p1, p2 = inputParams.p2, type = inputParams.type; // int
+  let val1 = parseFloat(inputParams.val1), val2 = parseFloat(inputParams.val2); // float, integrity checked in getPlotParams
   let p_1 = p1ToP[p1], p_2 = p1ToP[p2]; // int
-  let rbm = params.rbm; // string
+  let rbm = inputParams.rbm; // string
 
   // don't use 'with' block
   if (p1 > p2) {
@@ -107,8 +108,8 @@ function E2(params) {
 
   if (p2 - p1 === 1) {
     let bluePoint = null;
-    if (!isNumber(rbm)) {
-      let average = getAverage(val2 - val1, parseFloat(params.rbm), p_1, type);
+    if (!isUnparsable(rbm)) {
+      let average = getAverage(val2 - val1, parseFloat(rbm), p_1, type);
       if (average !== null) {
         bluePoint = [average, val2 - val1];
       }

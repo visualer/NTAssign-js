@@ -139,7 +139,7 @@ if ($body.hasClass('Step3')) {
   if (!(['Type', 'P1', 'P2', 'Val1', 'Val2', 'RBM'].every((e) => urlParams[e] !== undefined )))
     location.href = 'Step1.html';
 
-  let params = {
+  let inputParams = {
     type: parseInt(urlParams['Type']), // int
     p1: parseInt(urlParams['P1']), // int
     p2: parseInt(urlParams['P2']), // int
@@ -149,21 +149,21 @@ if ($body.hasClass('Step3')) {
   };
 
   let valueBetween = (xy, a, b) => (xy >= a && xy <= b);
-  let val1_ = parseFloat(params.val1), val2_ = parseFloat(params.val2), rbm_ = parseFloat(params.rbm);
+  let val1_ = parseFloat(inputParams.val1), val2_ = parseFloat(inputParams.val2), rbm_ = parseFloat(inputParams.rbm);
   // also, '' and ' ' will be converted to NaN in this process.
 
   let emptyNum = Number(isNaN(val1_)) + Number(isNaN(val2_)) + Number(isNaN(rbm_));
-  if (emptyNum >= 2 || isNaN(params.type) || isNaN(params.p1) || isNaN(params.p2) ||
+  if (emptyNum >= 2 || isNaN(inputParams.type) || isNaN(inputParams.p1) || isNaN(inputParams.p2) ||
     !isNaN(val1_) && !valueBetween(val1_, 0, 4) || !isNaN(val2_) && !valueBetween(val2_, 0, 4) ||
-    !isNaN(rbm_) && !valueBetween(rbm_, 30, 500) || !valueBetween(params.type, 0, 5) ||
-    !valueBetween(params.p1, 0, 11) || !valueBetween(params.p2, 0, 11)
+    !isNaN(rbm_) && !valueBetween(rbm_, 30, 500) || !valueBetween(inputParams.type, 0, 5) ||
+    !valueBetween(inputParams.p1, 0, 11) || !valueBetween(inputParams.p2, 0, 11)
   )
     location.href = 'Step1.html';
 
 
-  $('#title')[0].innerHTML += ' <small>' + typeArr[params.type] + '</small>';
+  $('#title')[0].innerHTML += ' <small>' + typeArr[inputParams.type] + '</small>';
 
-  let plotParams = processOutput(getPlotParams(params));
+  let plotParams = processOutput(getPlotParams(inputParams));
 
   $('#resultDiv')
     .addClass(plotParams.ar !== AssignResult.error ? 'alert-success' : 'alert-danger')
@@ -298,7 +298,7 @@ function calculate(form) { // used in Step2
         .css('cursor', 'pointer')
     );
 
-    let params = {
+    let inputParams = {
       type: t, // int
       p1: p1, // int
       p2: p1 + 1, // int
@@ -307,7 +307,7 @@ function calculate(form) { // used in Step2
       rbm: '' // empty-able str
     };
 
-    let plotParams = processOutput(getPlotParams(params));
+    let plotParams = processOutput(getPlotParams(inputParams));
     let plotId = `calcPlot${Math.round(p1 / 2)}`;
 
     let $plot = $(`
