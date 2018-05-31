@@ -59,7 +59,8 @@ function E1R1(inputParams) {
     type: type,
     pointType: 'none',
     p1Lesser: p1ToLesser(p1),
-    resultString: resultString
+    resultString: resultString,
+    uncertainty: 0.0002
   });
 
   if (cos[0] === -1 && cos[1] === -1) {
@@ -104,7 +105,8 @@ function E1R1(inputParams) {
     type: type,
     pointType: 'green',
     p1Lesser: p1ToLesser(p1),
-    resultString: resultString
+    resultString: resultString,
+    uncertainty: inputParams.uncertainty
   }, modAnother);
 
 }
@@ -157,7 +159,8 @@ function E2(inputParams) {
       pointType: 'red',
       bluePoint: bluePoint,
       p1Lesser: p1,
-      resultString: resultString
+      resultString: resultString,
+      uncertainty: inputParams.uncertainty
     });
   }
 
@@ -173,7 +176,8 @@ function E2(inputParams) {
  * @param {int} params.p1Lesser - smaller one of the p1 in the plot
  * @param {int} params.type - environment type
  * @param {string} params.resultString - output result
- * @param {string} params.bluePoint blue point if exists
+ * @param {(number[]|null)} params.bluePoint blue point if exists
+ * @param {number} params.uncertainty - uncertainty of the input
  * @returns {Object} assigned results
  */
 function Assign(params, mod = -1) {
