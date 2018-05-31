@@ -3,6 +3,17 @@
 
 let isUnparsable = e => isNaN(parseFloat(e));
 
+/**
+ * Get assigned results to be processed for plotting.
+ * @param {Object} inputParams - input parameters
+ * @param {int} inputParams.p1 - p denoting transition type associated with val1
+ * @param {(string|null)} inputParams.val1 - null-able or empty-able string of transition energy 1
+ * @param {int} inputParams.p2 - p denoting transition type associated with val2
+ * @param {(string|null)} inputParams.val2 - null-able or empty-able string of transition energy 2
+ * @param {(string|null)} inputParams.rbm - null-able or empty-able string of RBM frequency
+ * @param {int} inputParams.type - environment type
+ * @returns {Object} assigned results
+*/
 function getPlotParams(inputParams) {
   let decimalDigits = (d) => d.split('.')[1].length;
 
@@ -10,7 +21,8 @@ function getPlotParams(inputParams) {
     throw new Error('Unauthorized Access');
   } else if (isUnparsable(inputParams.val1) || isUnparsable(inputParams.val2)) {
     if (isUnparsable(inputParams.rbm)) throw new Error('Unauthorized Access');
-    inputParams.uncertainty = 2.0 / Math.pow(10, decimalDigits(isUnparsable(inputParams.val1) ? inputParams.val2 : inputParams.val1 ));
+    inputParams.uncertainty = 2.0 / Math.pow(10,
+      decimalDigits(isUnparsable(inputParams.val1) ? inputParams.val2 : inputParams.val1 ));
     return E1R1(inputParams);
   } else {
     inputParams.uncertainty = 2.0 / Math.pow(10,
@@ -20,9 +32,20 @@ function getPlotParams(inputParams) {
   }
 }
 
+/**
+ * Get assigned results of 1 energy 1 RBM frequency input.
+ * @param {Object} inputParams - input parameters
+ * @param {int} inputParams.p1 - p denoting transition type associated with val1
+ * @param {(string|null)} inputParams.val1 - null-able or empty-able string of transition energy 1
+ * @param {int} inputParams.p2 - p denoting transition type associated with val2
+ * @param {(string|null)} inputParams.val2 - null-able or empty-able string of transition energy 2
+ * @param {string} inputParams.rbm - parseable string (to float) of RBM frequency
+ * @param {int} inputParams.type - environment type
+ * @returns {Object} assigned results
+ */
 function E1R1(inputParams) {
 
-  let p1 = (isUnparsable(inputParams.val1) ? inputParams.p2 : inputParams.p1), type = inputParams.type, p = p1ToP[p1]; // int
+  let p1 = (isUnparsable(inputParams.val1) ? inputParams.p2 : inputParams.p1), type = inputParams.type, p = p1ToP(p1);
   let val = parseFloat(isUnparsable(inputParams.val1) ? inputParams.val2 : inputParams.val1); // float
   let wRBM = parseFloat(inputParams.rbm); // float, integrity checked in getPlotParam
 
@@ -32,7 +55,7 @@ function E1R1(inputParams) {
   let error = () => Assign({
     bluePoint: null,
     point: [ val, 0.23 ],
-    pLesser: pToLesser[p],
+    pLesser: pToLesser(p),
     type: type,
     pointType: 'none',
     p1Lesser: p1ToLesser(p1),
@@ -47,7 +70,7 @@ function E1R1(inputParams) {
   let pAnother, modAnother;
   if (isMetal(p)) {
     if (p1 % 4 - 3 !== (cos[0] === -1 ? 0 : -1)) {
-      resultString += `Invalid input: You may have mistaken ${p1Arr[p1 + 5 - (p1 % 4) * 2]} for ${p1Arr[p1]}.`;
+      resultString += `Invalid input: You may have mistaken ${p1Name[p1 + 5 - (p1 % 4) * 2]} for ${p1Name[p1]}.`;
       return error();
     }
     pAnother = p;
@@ -86,13 +109,23 @@ function E1R1(inputParams) {
 
 }
 
-
+/**
+ * Get assigned results of 2 energy (with/without RBM frequency) input.
+ * @param {Object} inputParams - input parameters
+ * @param {int} inputParams.p1 - p denoting transition type associated with val1
+ * @param {string} inputParams.val1 - parseable string (to float) of transition energy 1
+ * @param {int} inputParams.p2 - p denoting transition type associated with val2
+ * @param {string} inputParams.val2 - parseable string (to float) of transition energy 2
+ * @param {(string|null)} inputParams.rbm - null-able or empty-able string of RBM frequency
+ * @param {int} inputParams.type - environment type
+ * @returns {Object} assigned results
+ */
 function E2(inputParams) {
 
   let resultString = '';
-  let p1 = inputParams.p1, p2 = inputParams.p2, type = inputParams.type; // int
-  let val1 = parseFloat(inputParams.val1), val2 = parseFloat(inputParams.val2); // float, integrity checked in getPlotParams
-  let p_1 = p1ToP[p1], p_2 = p1ToP[p2]; // int
+  let p1 = inputParams.p1, p2 = inputParams.p2, type = inputParams.type;
+  let val1 = parseFloat(inputParams.val1), val2 = parseFloat(inputParams.val2);
+  let p_1 = p1ToP(p1), p_2 = p1ToP(p2);
   let rbm = inputParams.rbm; // string
 
   // don't use 'with' block
@@ -130,6 +163,19 @@ function E2(inputParams) {
 
 }
 
+/**
+ * Get assigned results of pre-processed parameters.
+ * @param {Object} params - pre-processed parameters
+ * @param {int} mod=-1 - transferred pre-processed mod in E1R1()
+ * @param {array} params.point - point
+ * @param {string} params.pointType - type of the point, 'red' or 'green'
+ * @param {int} params.pLesser - smaller one of the p in the plot
+ * @param {int} params.p1Lesser - smaller one of the p1 in the plot
+ * @param {int} params.type - environment type
+ * @param {string} params.resultString - output result
+ * @param {string} params.bluePoint blue point if exists
+ * @returns {Object} assigned results
+ */
 function Assign(params, mod = -1) {
 
   // params: plotParams
@@ -213,9 +259,11 @@ function Assign(params, mod = -1) {
     return params;
   }
 
-  // use the green criteria and query again for no match.
-  // and it's easy to see that green point, if not returned in the previous step,
-  // will not give results in this step.
+  /*
+  * use the green criteria and query again for no match.
+  * and it's easy to see that green point, if not returned in the previous step,
+  * will not give results in this step.
+  */
 
   setBounds(-0.070, 0.070, -0.040, 0.040);
   let tmp = Enumerable.from(params.all).orderBy(Dist_).toArray();
@@ -287,8 +335,8 @@ function processOutput(params) {
   params.resultLabel = result.map(e => [e[0], e[1]]);
 
   params.isMetal = isMetal(params.pLesser);
-  params.yAxisLabel = `\\(${p1Arr_raw[params.p1Lesser + 1]}-${p1Arr_raw[params.p1Lesser]}\\ (\\mathrm{eV})\\)`;
-  params.xAxisLabel = `\\((${p1Arr_raw[params.p1Lesser + 1]}+${p1Arr_raw[params.p1Lesser]})/2\\ (\\mathrm{eV})\\)`;
+  params.yAxisLabel = `\\(${p1Name_raw[params.p1Lesser + 1]}-${p1Name_raw[params.p1Lesser]}\\ (\\mathrm{eV})\\)`;
+  params.xAxisLabel = `\\((${p1Name_raw[params.p1Lesser + 1]}+${p1Name_raw[params.p1Lesser]})/2\\ (\\mathrm{eV})\\)`;
 
 
   // select g.OrderBy(elem => elem[0]);

@@ -38,8 +38,8 @@ let $body = $("body");
 if ($body.hasClass("Step1")) {
 
   let $selectType = $("#slType");
-  for (let i = 0; i < typeArr.length; i++)
-    $selectType.append(`<option value="${i}">${typeArr[i]}</option>`);
+  for (let i = 0; i < typeName.length; i++)
+    $selectType.append(`<option value="${i}">${typeName[i]}</option>`);
 
   $selectType.selectpicker('val', 0)
     .selectpicker('refresh')
@@ -61,21 +61,21 @@ if ($body.hasClass('Step2')) {
   let $selectP1 = $('#slP1'), $selectP2 = $('#slP2'), $selectType = $('#slType');
   let $selectP1P2 = $('#slP1, #slP2');
 
-  $('#title')[0].innerHTML += ' <small>' + typeArr[type] + '</small>';
+  $('#title')[0].innerHTML += ' <small>' + typeName[type] + '</small>';
 
   $('#dataTables').find(`.type${type}`).removeClass('hidden');
 
   // generate options
 
-  for (let i = 0; i < p1Arr.length; i++) {
+  for (let i = 0; i < p1Name.length; i++) {
     if (type >= 3) {
       let threshold = (type === 3 ? 8 : 2);
       if (i >= threshold) break;
     }
-    $selectP1P2.append(`<option value="${i}">${p1Arr[i]}</option>`);
+    $selectP1P2.append(`<option value="${i}">${p1Name[i]}</option>`);
   }
-  for (let i = 0; i < typeArr.length; i++)
-    $selectType.append(`<option value="${i}">${typeArr[i]}</option>`);
+  for (let i = 0; i < typeName.length; i++)
+    $selectType.append(`<option value="${i}">${typeName[i]}</option>`);
 
   // start recovering
 
@@ -161,7 +161,7 @@ if ($body.hasClass('Step3')) {
     location.href = 'Step1.html';
 
 
-  $('#title')[0].innerHTML += ' <small>' + typeArr[inputParams.type] + '</small>';
+  $('#title')[0].innerHTML += ' <small>' + typeName[inputParams.type] + '</small>';
 
   let plotParams = processOutput(getPlotParams(inputParams));
 
@@ -260,12 +260,12 @@ function calculate(form) { // used in Step2
 
   let calculatedEnergy = new Array(12);
   for (let p1 = 0; p1 < 12; p1++) {
-    if (isMetal(p1ToP[p1]) !== isMetal(n, m)) {
+    if (isMetal(p1ToP(p1)) !== isMetal(n, m)) {
       calculatedEnergy[p1] = -1;
       continue;
     }
     try {
-      calculatedEnergy[p1] = getEnergy(Dt(n, m, t), Theta(n, m), p1ToP[p1], t, isMetal(n, m) ? p1 % 2 - 1 : Mod(n, m))
+      calculatedEnergy[p1] = getEnergy(Dt(n, m, t), Theta(n, m), p1ToP(p1), t, isMetal(n, m) ? p1 % 2 - 1 : Mod(n, m))
         .toFixed(3).toString();
     }
     catch (err) {
@@ -289,11 +289,11 @@ function calculate(form) { // used in Step2
     validResultNumber++;
 
     $resultList.append(
-      $(`<tr><td>${p1Arr[p1]}</td><td>\\(${calculatedEnergy[p1]}\\ \\mathrm{eV}\\)</td></tr>`)
+      $(`<tr><td>${p1Name[p1]}</td><td>\\(${calculatedEnergy[p1]}\\ \\mathrm{eV}\\)</td></tr>`)
         .click(() => changeEdit(p1, calculatedEnergy[p1], calculatedEnergy[p1 + 1]))
         .css('cursor', 'pointer')
     ).append(
-      $(`<tr><td>${p1Arr[p1 + 1]}</td><td>\\(${calculatedEnergy[p1 + 1]}\\ \\mathrm{eV}\\)</td></tr>`)
+      $(`<tr><td>${p1Name[p1 + 1]}</td><td>\\(${calculatedEnergy[p1 + 1]}\\ \\mathrm{eV}\\)</td></tr>`)
         .click(() => changeEdit(p1, calculatedEnergy[p1], calculatedEnergy[p1 + 1]))
         .css('cursor', 'pointer')
     );
