@@ -1,5 +1,7 @@
 # Chirality Assignment Program of SWCNT [![CodeFactor](https://www.codefactor.io/repository/github/visualer/ntassign.js/badge)](https://www.codefactor.io/repository/github/visualer/ntassign.js)
 
+Updated 2018/6/3
+
 ## Overview
 
 This is the source code of the website described in _ACS Nano_, **2017**, _11_ (10), pp 10509–10518, as an encapsulation of the chirality determining function of the bilayer graph. However, the assignment logic is not described in the paper, which is implemented here, **and may be updated at any time**.
@@ -8,9 +10,9 @@ The official release of this project is hosted at:
 
 > [cntassign.ga](http://cntassign.ga) => [www.chem.pku.edu.cn/cnt_assign](http://www.chem.pku.edu.cn/cnt_assign)
 
-A (maybe fallback) version is available if our server is down:
+The page is also available on my GitHub page.
 
-> [cntassign.tk](http://cntassign.tk) => [cntassign.gearhostpreview.com](http://cntassign.gearhostpreview.com)
+> [https://visualer.github.io/NTAssign.js/](https://visualer.github.io/NTAssign.js/)
 
 ## Usage
 
