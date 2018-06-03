@@ -63,7 +63,12 @@ if ($body.hasClass('Step2')) {
 
   $('#title')[0].innerHTML += ' <small>' + typeName[type] + '</small>';
 
-  $('#dataTables').find(`.type${type}`).removeClass('hidden');
+  let $dataTables = $('#dataTables');
+  $dataTables.find(`.type${type}`).removeClass('hidden');
+  for (let i = 0; i < 6; i++) {
+    if (i === type) continue;
+    $dataTables.find(`.type${i}.hidden`).remove(); // MathJax will process hidden elements if not removed
+  }
 
   // generate options
 
