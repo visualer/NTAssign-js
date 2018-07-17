@@ -8,16 +8,6 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 
 const $ = gulpLoadPlugins();
 
-gulp.task('images', () =>
-  gulp.src('src/img/**/*')
-    .pipe($.cache($.imagemin({
-      progressive: true,
-      interlaced: true
-    })))
-    .pipe(gulp.dest('dist/img'))
-    .pipe($.size({title: 'img'}))
-);
-
 gulp.task('copy', () =>
   gulp.src([
     'src/**',
@@ -74,7 +64,7 @@ gulp.task('scripts', () =>
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('.tmp/js'))
     .pipe($.concat('app.min.js'))
-    .pipe($.uglify({preserveComments: 'none'}))
+    .pipe($.uglify())
     .pipe($.size({title: 'scripts'}))
     .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('dist/js'))
@@ -88,6 +78,7 @@ gulp.task('html', () => {
       noAssets: true
     }))
 
+    // Minify any HTML
     .pipe($.if('*.html', $.htmlmin({
       removeComments: true,
       collapseWhitespace: true,
@@ -99,6 +90,7 @@ gulp.task('html', () => {
       removeStyleLinkTypeAttributes: true,
       removeOptionalTags: true
     })))
+    // Output files
     .pipe($.if('*.html', $.size({title: 'html', showFiles: true})))
     .pipe(gulp.dest('dist'));
 });
@@ -108,7 +100,7 @@ gulp.task('clean', () => del(['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 gulp.task('default', ['clean'], cb =>
   runSequence(
     'styles',
-    ['html', 'scripts', 'images', 'copy'],
+    ['html', 'scripts', 'copy'],
     cb
   )
 );

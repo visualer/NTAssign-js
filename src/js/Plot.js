@@ -237,10 +237,10 @@ function drawPlot(placeholder, params) {
               : ''
           };
           $placeholder.append(`
-                        <div class="series_label" style="color:${dA.color};left:${dA.left}px;top:${dA.top - 0}px;">
+                        <div class="series_label" style="color:${dA.color};left:${dA.left}px;top:${dA.top}px;">
                             <p>${dA.c1}${dA.c2}${dA.c3}</p>
                         </div>
-                    `); // workaround to let editor know that dA.top is integer
+                    `);
         }
       }
     }

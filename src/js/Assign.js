@@ -176,7 +176,7 @@ function E2(inputParams) {
  * @param {int} params.p1Lesser - smaller one of the p1 in the plot
  * @param {int} params.type - environment type
  * @param {string} params.resultString - output result
- * @param {(number[]|null)} params.bluePoint blue point if exists
+ * @param {(number[]|null)} params.bluePoint - blue point if exists
  * @param {number} params.uncertainty - uncertainty of the input
  * @returns {Object} assigned results
  */

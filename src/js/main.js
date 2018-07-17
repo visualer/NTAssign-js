@@ -25,10 +25,6 @@ let urlParams = {};
     urlParams[decode(match[1])] = decode(match[2]);
 })();
 
-if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-  $('.selectpicker').selectpicker('mobile');
-}
-
 let $body = $("body");
 
 /*
@@ -122,6 +118,7 @@ if ($body.hasClass('Step2')) {
 
   $('select').on('loaded.bs.select', clearTitle);
   $selectP1.on('changed.bs.select', function (e, index) {
+    console.log('changed fired');
     let i = index - 1;
     clearTitle(); // only when slP1 changes the title have to be cleared; only active select
     $selectP2.find('option').each(function () {
@@ -129,6 +126,7 @@ if ($body.hasClass('Step2')) {
       if (i % 2 === 0 && value === i + 1 || i % 2 === 1 && value === i - 1)
         $selectP2.selectpicker('val', value);
     });
+    $('.selectpicker').selectpicker('refresh');
   });
 
 }
@@ -243,7 +241,7 @@ function calculate(form) { // used in Step2
 
   let n = parseInt(form.NCalc.value), m = parseInt(form.MCalc.value), t = parseInt(urlParams['Type']);
   if (n < m) [n, m] = [m, n];
-  if (isNaN(n) || isNaN(m) || n <= 6 || m <= 0 || 2 * n + m > seriesThreshold) {
+  if (isNaN(n) || isNaN(m) || n <= 6 || m < 0 || 2 * n + m > seriesThreshold) {
     invokeError();
     return false;
   }
