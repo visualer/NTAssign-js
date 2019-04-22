@@ -4,9 +4,7 @@
 let timeLoad = performance.now(); // before load
 let timeStartup;
 
-$.getScript(navigator.language.substr(0, 2).toLowerCase() !== "zh"
-  ? "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js"
-  : "https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js"
+$.getScript("https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js"
   + "?config=TeX-AMS_SVG-full,Safe&locale=en", function () {
   timeStartup = performance.now();
   console.log("MathJax load takes " + (timeStartup - timeLoad).toFixed(2));

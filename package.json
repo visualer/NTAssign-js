@@ -16,13 +16,14 @@
     "gulp-imagemin": "^4.1.0",
     "gulp-load-plugins": "^1.2.4",
     "gulp-newer": "^1.2.0",
-    "gulp-sass": "^4.0.1",
+    "gulp-sass": "^4.0.2",
     "gulp-size": "^3.0.0",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
     "gulp-useref": "^3.1.0",
     "gulp-util": "^3.0.8",
-    "run-sequence": "latest"
+    "run-sequence": "latest",
+    "natives": "^1.1.6"
   },
   "private": true
 }
